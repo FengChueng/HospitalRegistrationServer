@@ -1,0 +1,70 @@
+2017-04-16 20:23:04.151 [main] INFO  com.zyl.SpringbootdemoApplicationTests - Starting SpringbootdemoApplicationTests on PC-20170205IEKP with PID 39696 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-16 20:23:04.151 [main] INFO  com.zyl.SpringbootdemoApplicationTests - No active profile set, falling back to default profiles: default
+2017-04-16 20:23:15.942 [main] INFO  com.zyl.SpringbootdemoApplicationTests - Started SpringbootdemoApplicationTests in 12.352 seconds (JVM running for 14.17)
+2017-04-16 20:44:11.228 [main] INFO  com.zyl.SpringbootdemoApplication - Starting SpringbootdemoApplication on PC-20170205IEKP with PID 37648 (E:\J2EEEnvironment\J2EE\springbootdemo\target\classes started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-16 20:44:11.229 [main] INFO  com.zyl.SpringbootdemoApplication - No active profile set, falling back to default profiles: default
+2017-04-16 20:56:36.173 [main] INFO  com.zyl.SpringbootdemoApplication - Starting SpringbootdemoApplication on PC-20170205IEKP with PID 41476 (E:\J2EEEnvironment\J2EE\springbootdemo\target\classes started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-16 20:56:36.174 [main] INFO  com.zyl.SpringbootdemoApplication - No active profile set, falling back to default profiles: default
+2017-04-16 20:56:45.389 [main] INFO  com.zyl.SpringbootdemoApplication - Started SpringbootdemoApplication in 9.625 seconds (JVM running for 10.427)
+2017-04-16 20:58:11.251 [main] INFO  com.zyl.SpringbootdemoApplicationTests - Starting SpringbootdemoApplicationTests on PC-20170205IEKP with PID 41260 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-16 20:58:11.252 [main] INFO  com.zyl.SpringbootdemoApplicationTests - No active profile set, falling back to default profiles: default
+2017-04-16 20:58:18.220 [main] INFO  com.zyl.SpringbootdemoApplicationTests - Started SpringbootdemoApplicationTests in 7.404 seconds (JVM running for 8.767)
+2017-04-16 21:14:25.323 [main] INFO  com.zyl.SpringbootdemoApplication - Starting SpringbootdemoApplication on PC-20170205IEKP with PID 39676 (E:\J2EEEnvironment\J2EE\springbootdemo\target\classes started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-16 21:14:25.334 [main] INFO  com.zyl.SpringbootdemoApplication - No active profile set, falling back to default profiles: default
+2017-04-16 21:14:35.359 [main] INFO  com.zyl.SpringbootdemoApplication - Started SpringbootdemoApplication in 10.675 seconds (JVM running for 11.621)
+2017-04-16 21:16:01.090 [main] INFO  com.zyl.SpringbootdemoApplication - Starting SpringbootdemoApplication on PC-20170205IEKP with PID 41496 (E:\J2EEEnvironment\J2EE\springbootdemo\target\classes started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-16 21:16:01.092 [main] INFO  com.zyl.SpringbootdemoApplication - No active profile set, falling back to default profiles: default
+2017-04-16 21:16:08.107 [main] INFO  com.zyl.SpringbootdemoApplication - Started SpringbootdemoApplication in 7.599 seconds (JVM running for 8.505)
+2017-04-16 21:27:12.859 [main] INFO  com.zyl.SpringbootdemoApplication - Starting SpringbootdemoApplication on PC-20170205IEKP with PID 43252 (E:\J2EEEnvironment\J2EE\springbootdemo\target\classes started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-16 21:27:12.864 [main] INFO  com.zyl.SpringbootdemoApplication - No active profile set, falling back to default profiles: default
+2017-04-16 21:27:22.100 [main] INFO  com.zyl.SpringbootdemoApplication - Started SpringbootdemoApplication in 9.686 seconds (JVM running for 10.384)
+2017-04-16 21:31:46.963 [main] INFO  com.zyl.SpringbootdemoApplication - Starting SpringbootdemoApplication on PC-20170205IEKP with PID 44364 (E:\J2EEEnvironment\J2EE\springbootdemo\target\classes started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-16 21:31:46.964 [main] INFO  com.zyl.SpringbootdemoApplication - No active profile set, falling back to default profiles: default
+2017-04-16 21:31:57.376 [main] INFO  com.zyl.SpringbootdemoApplication - Started SpringbootdemoApplication in 10.855 seconds (JVM running for 11.575)
+2017-04-16 21:35:43.382 [main] INFO  com.zyl.SpringbootdemoApplicationTests - Starting SpringbootdemoApplicationTests on PC-20170205IEKP with PID 44108 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-16 21:35:43.383 [main] INFO  com.zyl.SpringbootdemoApplicationTests - No active profile set, falling back to default profiles: default
+2017-04-16 21:35:52.087 [main] INFO  com.zyl.SpringbootdemoApplicationTests - Started SpringbootdemoApplicationTests in 9.12 seconds (JVM running for 10.968)
+2017-04-16 21:36:45.333 [main] INFO  com.zyl.SpringbootdemoApplicationTests - Starting SpringbootdemoApplicationTests on PC-20170205IEKP with PID 44476 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-16 21:36:45.334 [main] INFO  com.zyl.SpringbootdemoApplicationTests - No active profile set, falling back to default profiles: default
+2017-04-16 21:36:53.663 [main] INFO  com.zyl.SpringbootdemoApplicationTests - Started SpringbootdemoApplicationTests in 8.783 seconds (JVM running for 10.185)
+2017-04-16 21:36:54.096 [main] ERROR com.zyl.SpringbootdemoApplicationTests - com.zyl.exception.ValidException: 账号已存在
+2017-04-17 01:29:25.933 [main] INFO  com.zyl.test.HospitalTest - Starting HospitalTest on PC-20170205IEKP with PID 48772 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-17 01:29:25.933 [main] INFO  com.zyl.test.HospitalTest - No active profile set, falling back to default profiles: default
+2017-04-17 01:29:35.610 [main] INFO  com.zyl.test.HospitalTest - Started HospitalTest in 11.095 seconds (JVM running for 13.29)
+2017-04-17 01:41:28.017 [main] INFO  com.zyl.test.HospitalTest - Starting HospitalTest on PC-20170205IEKP with PID 12540 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-17 01:41:28.018 [main] INFO  com.zyl.test.HospitalTest - No active profile set, falling back to default profiles: default
+2017-04-17 01:41:36.860 [main] INFO  com.zyl.test.HospitalTest - Started HospitalTest in 9.302 seconds (JVM running for 10.909)
+2017-04-17 01:42:38.067 [main] INFO  com.zyl.test.HospitalTest - Starting HospitalTest on PC-20170205IEKP with PID 13940 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-17 01:42:38.068 [main] INFO  com.zyl.test.HospitalTest - No active profile set, falling back to default profiles: default
+2017-04-17 01:42:46.628 [main] INFO  com.zyl.test.HospitalTest - Started HospitalTest in 9.0 seconds (JVM running for 10.113)
+2017-04-17 01:45:34.471 [main] INFO  com.zyl.test.HospitalTest - Starting HospitalTest on PC-20170205IEKP with PID 13376 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-17 01:45:34.472 [main] INFO  com.zyl.test.HospitalTest - No active profile set, falling back to default profiles: default
+2017-04-17 01:45:42.822 [main] INFO  com.zyl.test.HospitalTest - Started HospitalTest in 8.92 seconds (JVM running for 10.084)
+2017-04-17 02:24:43.497 [main] INFO  com.zyl.test.PatientTest - Starting PatientTest on PC-20170205IEKP with PID 46788 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-17 02:24:43.497 [main] INFO  com.zyl.test.PatientTest - No active profile set, falling back to default profiles: default
+2017-04-17 02:26:21.817 [main] INFO  com.zyl.test.PatientTest - Starting PatientTest on PC-20170205IEKP with PID 48752 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-17 02:26:21.817 [main] INFO  com.zyl.test.PatientTest - No active profile set, falling back to default profiles: default
+2017-04-17 02:26:30.400 [main] INFO  com.zyl.test.PatientTest - Started PatientTest in 9.052 seconds (JVM running for 10.204)
+2017-04-17 02:32:23.561 [main] INFO  com.zyl.test.PatientTest - Starting PatientTest on PC-20170205IEKP with PID 47408 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-17 02:32:23.561 [main] INFO  com.zyl.test.PatientTest - No active profile set, falling back to default profiles: default
+2017-04-17 02:32:32.550 [main] INFO  com.zyl.test.PatientTest - Started PatientTest in 9.392 seconds (JVM running for 10.516)
+2017-04-17 02:33:19.090 [main] INFO  com.zyl.test.PatientTest - Starting PatientTest on PC-20170205IEKP with PID 11716 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-17 02:33:19.090 [main] INFO  com.zyl.test.PatientTest - No active profile set, falling back to default profiles: default
+2017-04-17 02:33:27.657 [main] INFO  com.zyl.test.PatientTest - Started PatientTest in 8.94 seconds (JVM running for 10.033)
+2017-04-17 02:35:06.065 [main] INFO  com.zyl.test.PatientTest - Starting PatientTest on PC-20170205IEKP with PID 11092 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-17 02:35:06.065 [main] INFO  com.zyl.test.PatientTest - No active profile set, falling back to default profiles: default
+2017-04-17 02:35:14.808 [main] INFO  com.zyl.test.PatientTest - Started PatientTest in 9.131 seconds (JVM running for 10.289)
+2017-04-17 02:35:40.972 [main] INFO  com.zyl.test.PatientTest - Starting PatientTest on PC-20170205IEKP with PID 9568 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-17 02:35:40.972 [main] INFO  com.zyl.test.PatientTest - No active profile set, falling back to default profiles: default
+2017-04-17 02:35:49.183 [main] INFO  com.zyl.test.PatientTest - Started PatientTest in 8.629 seconds (JVM running for 9.742)
+2017-04-17 03:10:57.169 [main] INFO  com.zyl.test.PatientTest - Starting PatientTest on PC-20170205IEKP with PID 46140 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-17 03:10:57.170 [main] INFO  com.zyl.test.PatientTest - No active profile set, falling back to default profiles: default
+2017-04-17 03:14:09.905 [main] INFO  com.zyl.test.PatientTest - Starting PatientTest on PC-20170205IEKP with PID 48280 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-17 03:14:09.905 [main] INFO  com.zyl.test.PatientTest - No active profile set, falling back to default profiles: default
+2017-04-17 03:14:18.798 [main] INFO  com.zyl.test.PatientTest - Started PatientTest in 9.383 seconds (JVM running for 10.537)
+2017-04-17 03:20:00.778 [main] INFO  com.zyl.test.AccountTest - Starting AccountTest on PC-20170205IEKP with PID 50352 (started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-17 03:20:00.779 [main] INFO  com.zyl.test.AccountTest - No active profile set, falling back to default profiles: default
+2017-04-17 03:20:09.661 [main] INFO  com.zyl.test.AccountTest - Started AccountTest in 9.384 seconds (JVM running for 10.476)
+2017-04-17 03:21:06.017 [main] INFO  com.zyl.SpringbootdemoApplication - Starting SpringbootdemoApplication on PC-20170205IEKP with PID 7696 (E:\J2EEEnvironment\J2EE\springbootdemo\target\classes started by Administrator in E:\J2EEEnvironment\J2EE\springbootdemo)
+2017-04-17 03:21:06.018 [main] INFO  com.zyl.SpringbootdemoApplication - No active profile set, falling back to default profiles: default
+2017-04-17 03:21:15.449 [main] INFO  com.zyl.SpringbootdemoApplication - Started SpringbootdemoApplication in 9.848 seconds (JVM running for 10.478)
