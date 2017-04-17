@@ -34,7 +34,7 @@ public class HospitalTest extends BaseTest{
 //		accountService = SpringUtil.getBean(AccountService.class);
 //	}
 	
-	@Test @Ignore
+	@Test
 	@Transactional
 	public void insertHospital() {
 		try {
@@ -47,7 +47,7 @@ public class HospitalTest extends BaseTest{
 				department.setInfo("科室"+i+"简介");
 				//医生
 				Set<Doctor> doctors = new HashSet<>();
-				for (int j = 0; j < 10; j++) {
+				for (int j = 0; j < 5; j++) {
 					//账号
 					Account account = new Account();
 					account.setMobilePhone("100000000"+i+""+j);

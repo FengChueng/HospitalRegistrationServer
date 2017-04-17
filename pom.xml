@@ -28,11 +28,8 @@
 
 	<dependencies>
 
-		<!-- <dependency>
-			<groupId>org.apache.maven.plugins</groupId>
-			<artifactId>maven-resources-plugin</artifactId>
-			<version>2.6</version>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-resources-plugin</artifactId> 
+			<version>2.6</version> </dependency> -->
 
 		<!-- 核心模块，包括自动配置支持、日志和YAML -->
 		<dependency>
@@ -49,14 +46,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-			<!-- <exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-tomcat</artifactId>
-				</exclusion>
-			</exclusions> -->
+			<!-- 移除嵌入式tomcat插件 -->
+			<!-- <exclusions> <exclusion> <groupId>org.springframework.boot</groupId> 
+				<artifactId>spring-boot-starter-tomcat</artifactId> </exclusion> </exclusions> -->
 		</dependency>
-		<!-- 引入Thymeleaf模板 放于template文件下 -->
+		<!-- 引入Thymeleaf模板 放于templates文件下 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -81,7 +75,9 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
 		</dependency>
-
+		<!-- 把spring-boot项目部署到tomcat容器中 -->
+		<!-- <dependency> <groupId>org.apache.tomcat</groupId> <artifactId>tomcat-servlet-api</artifactId> 
+			<version>8.0.36</version> <scope>provided</scope> </dependency> -->
 	</dependencies>
 
 	<build>
@@ -105,16 +101,9 @@
 				<configuration>
 					<executable>true</executable>
 				</configuration>
-				<!-- <executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-						<configuration>
-							<classifier>exec</classifier>
-						</configuration>
-					</execution>
-				</executions> -->
+				<!-- <executions> <execution> <goals> <goal>repackage</goal> </goals> 
+					<configuration> <classifier>exec</classifier> </configuration> </execution> 
+					</executions> -->
 			</plugin>
 		</plugins>
 	</build>

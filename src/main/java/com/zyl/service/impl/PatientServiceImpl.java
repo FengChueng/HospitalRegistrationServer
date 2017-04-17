@@ -11,7 +11,6 @@ import com.zyl.domain.Patient;
 import com.zyl.exception.ValidException;
 import com.zyl.jpa.AccountDAO;
 import com.zyl.jpa.PatientDAO;
-import com.zyl.service.AccountService;
 import com.zyl.service.PatientService;
 
 @Repository
@@ -65,14 +64,13 @@ public class PatientServiceImpl implements PatientService{
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
 	public Patient queryByPatientId(String patientId) throws ValidException {
-		// TODO Auto-generated method stub
-		return null;
+		Patient patient = patientDAO.findOne(patientId);
+		return patient;
 	}
 
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
 	public Patient queryByAccountId(String accountId) throws ValidException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

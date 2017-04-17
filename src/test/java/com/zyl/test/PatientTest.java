@@ -32,7 +32,7 @@ public class PatientTest extends BaseTest{
 	@Autowired
 	private DoctorService doctorService;
 	
-	@Test @Ignore
+	@Test 
 	public void addAccount(){
 		String mobilePhone = "18380586504";
 		String password = "123456";
@@ -64,8 +64,8 @@ public class PatientTest extends BaseTest{
 		appointment.setClinicDate(new Date().getTime());
 		
 		try {
-			Patient patient = patientService.queryByPatientId("632473f8-9b42-4959-8a05-1f05d7fa1b69");
-			Doctor doctor = doctorService.queryDoctorByDoctorId("e402d41d-f65b-47cc-b878-c46c62733e8e");
+			Patient patient = patientService.queryByPatientId("fa5710e3-a55f-4c9e-8984-f8be7b453d8b");
+			Doctor doctor = doctorService.queryDoctorByDoctorId("025b493e-617f-4d6e-94c8-ef74fc24c518");
 			appointmentService.makeAppointment(appointment, patient, doctor);
 		} catch (ValidException e) {
 			e.printStackTrace();
