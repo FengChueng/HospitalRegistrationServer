@@ -22,7 +22,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicInsert
 @DynamicUpdate
 public class Patient implements Serializable{
-
 	/**
 	 * 
 	 */

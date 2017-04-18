@@ -100,4 +100,10 @@ public class PatientServiceImpl implements PatientService{
 		}
 		patientDAO.saveAndFlush(patient);
 	}
+
+	@Override
+	public Patient login(String patientId, String pwd) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

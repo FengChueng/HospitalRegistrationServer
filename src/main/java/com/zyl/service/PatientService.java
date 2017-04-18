@@ -4,6 +4,9 @@ import com.zyl.domain.Patient;
 import com.zyl.exception.ValidException;
 
 public interface PatientService {
+	
+	Patient login(String patientId,String pwd);
+	
 	Patient queryByPatientId(String patientId) throws ValidException;
 
 	void patientRegister(Patient newPatient) throws ValidException;
