@@ -28,25 +28,25 @@ public interface HospitalService {
 	 * @param date
 	 * @return
 	 */
-	Page<Hospital> queryByCreatedDate(long date,Pageable pageable);
+	Page<Hospital> queryByCreatedDate(long date,Pageable pageable) throws ValidException;
 	
 	/**
 	 * 按名字查询
 	 * @param hospitalName
+	 * @throws ValidException 
 	 */
-	Hospital queryByHospitalName(String hospitalName);
+	Hospital queryByHospitalName(String hospitalName) throws ValidException;
 	
 	/**
 	 * 按等级查询
-	 * @param level 级: 1,2,3
-	 * @param grade 等: A,B,C
+	 * @param level 常量表：5001-5009
 	 */
-	Page<Hospital> queryByLevelAndGrade(int level,String grade,Pageable pageable);
+	Page<Hospital> queryByLevel(int level,Pageable pageable) throws ValidException;
 	
 	/**
 	 * 按地理位置查询
 	 * @param location
 	 * @return
 	 */
-	Page<Hospital> queryByLocation(String location,Pageable pageable);
+	Page<Hospital> queryByLocation(String location,Pageable pageable) throws ValidException;
 }

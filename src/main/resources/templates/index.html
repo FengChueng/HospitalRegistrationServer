@@ -2,10 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
     <head>
-        <title>Hello World!</title>
+        <title>FileUpload</title>
     </head>
     <body>
        <form method="POST" enctype="multipart/form-data" action="/upload/userportrait"> 
+       		<p>账号：<input type="text" name="account" /></p>
+           <p>密码：<input type="text" name="role" /></p>
            <p>文件：<input type="file" name="file" /></p>
            <p><input type="submit" value="上传" /></p>
        </form>

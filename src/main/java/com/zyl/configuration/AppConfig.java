@@ -16,13 +16,21 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 		registry.addResourceHandler("/img/**").addResourceLocations("classpath:/img/");
 		// 指定外部文件
 		// registry.addResourceHandler("/api_files/**").addResourceLocations("file:D:/data/api_files");
-
 		super.addResourceHandlers(registry);
 	}
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/index").setViewName("/index");
+		registry.addViewController("/file/index").setViewName("/index");
+		
+		
+		registry.addViewController("/docter/doctor").setViewName("/doctor");
+		
+		registry.addViewController("/patient/login").setViewName("/login");
+		
+		registry.addViewController("/registerpage/register").setViewName("/register");
+		
+		registry.addViewController("/hospital/index").setViewName("/hospital");
 	}
 
 }

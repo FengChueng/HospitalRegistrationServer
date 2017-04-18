@@ -14,9 +14,10 @@ public interface AppointmentService {
 
 	Appointment queryByAppointId(String appointId) throws ValidException;
 	
-	void makeAppointment(String patientId,String doctorId,float price,long clinicDate,long appointDate,String location) throws ValidException;
-
 	List<Appointment> queryByPatientId(String patientId) throws ValidException;
 
 	List<Appointment> queryByDoctorId(String doctorId) throws ValidException;
+
+	void makeAppointment(String patientId, String doctorId, String doctorScheduleId, float price, long clinicDate,
+			long appointDate, String location) throws ValidException;
 }	

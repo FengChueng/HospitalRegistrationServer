@@ -46,8 +46,12 @@ public class HopitalServiceImpl implements HospitalService{
 	
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public Hospital queryByHospitalName(String hospitalName) {
+	public Hospital queryByHospitalName(String hospitalName) throws ValidException {
 		Hospital hospital = hospitalDAO.findByHospitalName(hospitalName);
+		if(hospital == null){
+			throw new ValidException("hospital", "未查找到该医院");
+		}
+		
 		return hospital;
 	}
 
@@ -61,13 +65,19 @@ public class HopitalServiceImpl implements HospitalService{
 
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public Page<Hospital> queryByLevelAndGrade(int level, String grade,Pageable pageable) {
-		return hospitalDAO.findByLevelAndGrade(level,grade,pageable);
+	public Page<Hospital> queryByLevel(int level,Pageable pageable) throws ValidException {
+		Page<Hospital> hpPage = hospitalDAO.findByLevel(level,pageable);
+		
+		if(hpPage == null){
+			throw new ValidException("hospital", "无数据");
+		}
+		
+		return hpPage;
 	}
 
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
 	public Page<Hospital> queryByLocation(String location,Pageable pageable) {
-		return hospitalDAO.findByLocation(location,pageable);
+		return hospitalDAO.findByLocationLike(location,pageable);
 	}
 }

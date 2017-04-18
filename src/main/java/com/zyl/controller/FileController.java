@@ -26,6 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.zyl.bean.ResponseEntity;
+import com.zyl.exception.ValidException;
 import com.zyl.service.DoctorService;
 import com.zyl.service.PatientService;
 import com.zyl.utils.Constant;
@@ -37,7 +38,7 @@ import com.zyl.utils.Constant;
  *
  */
 @RestController
-//@RequestMapping(value = "/")
+//@RequestMapping(value = "/file")
 public class FileController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileController.class);
 	
@@ -52,10 +53,10 @@ public class FileController {
 	@Value("${file.upload-path}")
     private String path;//文件路径
 	
-	@RequestMapping("/")    
-    public String index(){    
+	@RequestMapping("/file")
+	public String index() {
 		return "index";
-  }
+	}
 	/**
 	 * 上传用户头像
 	 * @param file
@@ -63,11 +64,9 @@ public class FileController {
 	 */
 	@RequestMapping("/upload/userportrait")
 	@ResponseBody
-	public ResponseEntity<String> upload(@RequestParam("mobilePhone")String mobilePhone,@RequestParam("role") int role,@RequestParam("file") MultipartFile file) {
+	@Transactional
+	public ResponseEntity<String> upload(@RequestParam("account")String account,@RequestParam("role") int role,@RequestParam("file") MultipartFile file) {
 		ResponseEntity<String> responseEntity = new ResponseEntity<>();
-		
-		
-		
 		if (file.isEmpty()) {
 			responseEntity.setStatus(Constant.FIAL);
 			responseEntity.setMsg("文件内容为空");
@@ -83,30 +82,32 @@ public class FileController {
 		// 文件上传路径
 		String filePath = path;
 		// 解决中文问题，liunx下中文路径，图片显示问题
-		fileName = System.currentTimeMillis() + suffixName;
-		//将文件路径存至角色表中
-		//TODO
-		
-		
-		
+		fileName = account + suffixName;
 		File dest = new File(filePath,fileName);
 		// 检测是否存在目录
 		if (!dest.getParentFile().exists()) {
 			dest.getParentFile().mkdirs();
 		}
+		
 		try {
 			file.transferTo(dest);
+			
+			if(role == Constant.DOCTOR){//医生
+				doctorService.modifyDoctorInfo(account, null, 0, 0, fileName, null, null, 0);
+			}else{
+				patientService.modifyPatientInfo(account, null, 0, 0, fileName, null);
+			}
 			responseEntity.setStatus(Constant.SUCCESS);
 			responseEntity.setMsg("上传成功!");
 			responseEntity.setData(dest.getAbsolutePath());
 		} catch (IllegalStateException e) {
 			responseEntity.setStatus(Constant.FIAL);
 			responseEntity.setMsg("上传失败:"+e.getMessage());
-			return responseEntity;
 		} catch (IOException e) {
 			responseEntity.setStatus(Constant.FIAL);
 			responseEntity.setMsg("上传失败:"+e.getMessage());
-			return responseEntity;
+		} catch (ValidException e) {
+			responseEntity.setMsg("上传失败:"+e.getMessage());
 		}
 		return responseEntity;
 	}

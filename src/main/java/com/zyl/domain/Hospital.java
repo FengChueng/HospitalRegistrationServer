@@ -18,57 +18,56 @@ import org.hibernate.annotations.DynamicUpdate;
 
 /**
  * 医院表
+ * 
  * @author Administrator
  *
  */
 @Entity
-@Table(name="hospital")
+@Table(name = "hospital")
 @DynamicUpdate
 @DynamicInsert
-public class Hospital implements Serializable{
-	
+public class Hospital implements Serializable {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="id")
-	private String id;
-	@Column(name="hospital_name",nullable=false,unique=true)
+	@Column(name = "hospital_id")
+	private String hospitalId;
+	@Column(name = "hospital_name", nullable = false)
 	private String hospitalName;
-	@Column(name="info",nullable=false)
-	private String info;//简介
-	@Column(name="grade",nullable=false)
-	private String grade;//等 A,B,C
-	@Column(name="level",nullable=false)
-	private int level;//级 1,2,3
-	@Column(name="create_date",nullable=false)
-	private long createDate;//创建时间;
-	
-	@Column(name="loc",nullable=true)
-	private String location;//地理位置
-	@Column(name="longitude",nullable=true)
-	private float longitude;//经度
-	@Column(name="latitude",nullable=true)
-	private float latitude;//纬度
-	
-	@Column(name="img",nullable=true)
+	@Column(name = "info", nullable = false)
+	private String info;// 简介
+	@Column(name = "level", nullable = false)
+	private int level;// 50001-5009
+	@Column(name = "create_date", nullable = false)
+	private long createDate;// 创建时间;
+
+	@Column(name = "loc", nullable = true)
+	private String location;// 地理位置
+	@Column(name = "longitude", nullable = true)
+	private float longitude;// 经度
+	@Column(name = "latitude", nullable = true)
+	private float latitude;// 纬度
+
+	@Column(name = "img", nullable = true)
 	private String img;
-	
-	@OneToMany(fetch=FetchType.EAGER,cascade={CascadeType.ALL},targetEntity=Department.class)
-	@JoinColumn(name="hospital_id",nullable=true)
-	private Set<Department> departments;//科室
-	
+
+	@OneToMany(fetch = FetchType.EAGER, cascade = { CascadeType.ALL }, targetEntity = Department.class)
+	@JoinColumn(name = "hospital_id", nullable = true)
+	private Set<Department> departments;// 科室
+
 	public Hospital() {
-		id = UUID.randomUUID().toString();
+		hospitalId = UUID.randomUUID().toString();
 	}
 
-	public String getId() {
-		return id;
+	public String getHospitalId() {
+		return hospitalId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setHospitalId(String hospitalId) {
+		this.hospitalId = hospitalId;
 	}
 
 	public String getHospitalName() {
@@ -87,14 +86,6 @@ public class Hospital implements Serializable{
 		this.info = info;
 	}
 
-	public String getGrade() {
-		return grade;
-	}
-
-	public void setGrade(String grade) {
-		this.grade = grade;
-	}
-
 	public int getLevel() {
 		return level;
 	}
@@ -110,7 +101,7 @@ public class Hospital implements Serializable{
 	public void setCreateDate(long createDate) {
 		this.createDate = createDate;
 	}
-	
+
 	public String getLocation() {
 		return location;
 	}
@@ -118,7 +109,7 @@ public class Hospital implements Serializable{
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	
+
 	public String getImg() {
 		return img;
 	}

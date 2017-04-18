@@ -5,16 +5,17 @@ import com.zyl.exception.ValidException;
 
 public interface PatientService {
 	
-	Patient login(String patientId,String pwd);
+	Patient login(String patientId,String pwd) throws ValidException;
+	
+	Patient register(String patientId,String pwd) throws ValidException;
 	
 	Patient queryByPatientId(String patientId) throws ValidException;
 
-	void patientRegister(Patient newPatient) throws ValidException;
-	
 	void modifyPatientPwd(String patientId,String oldPwd,String newPwd) throws ValidException;
 	
 	void resetPatientPwd(String patientId,String newPwd) throws ValidException;
-	
-	void modifyPatientInfo(String patientId, String realName, int sex, long birthDay, String portraint)
-			throws ValidException;
+
+	void modifyPatientInfo(String patientId, String realName, int sex, long birthDay, String portraint,
+			String mobilePhone) throws ValidException;
+
 }	

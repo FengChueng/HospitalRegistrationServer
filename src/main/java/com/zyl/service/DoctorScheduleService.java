@@ -7,13 +7,13 @@ import com.zyl.exception.ValidException;
 
 public interface DoctorScheduleService {
 	
-	
-	void addScheduleByDoctorAccount(String doctorAccount);
-	
-	void updateScheduleByDoctorAccount(String doctorAccount);
-	
 	List<DoctorSchedule> queryAllScheduleByDoctorAccount(String doctorAccount) throws ValidException;
 	
 	DoctorSchedule queryScheduleById(String doctorScheduleId) throws ValidException;
+
+	void addScheduleByDoctorAccount(String doctorAccount, int status, int maxAppointmentCount, long scheduleDate)
+			throws ValidException;
+
+	void updateScheduleById(String scheduleId, int status, long scheduleDate) throws ValidException;
 	
 }

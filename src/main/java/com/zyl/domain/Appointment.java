@@ -22,7 +22,7 @@ public class Appointment implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@Column(name="appoint_id")
-	private String orderId;//订单id
+	private String appointId;//预约id
 	@Column(name="price",nullable=true)
 	private float price;//价格
 	@Column(name="clinic_date",nullable=true)
@@ -34,23 +34,25 @@ public class Appointment implements Serializable{
 	@Column(name="loc",nullable=true)
 	private String location;
 	
-	@Column(name="patient_id",nullable=true)
-	private String patientId;
-	@Column(name="doctor_id",nullable=true)
-	private String doctorId;
+//	@Column(name="patient_id",nullable=true)
+//	private String patientId;
+//	@Column(name="doctor_id",nullable=true)
+//	private String doctorId;
 	
 	@Column(name="doctor_advice",nullable=true)
 	private String doctorAdvice;//医嘱
 	
 	public Appointment() {
-		this.orderId = UUID.randomUUID().toString();
+		this.appointId = UUID.randomUUID().toString();
 	}
-	public String getOrderId() {
-		return orderId;
+	public String getAppointId() {
+		return appointId;
 	}
-	public void setOrderId(String orderId) {
-		this.orderId = orderId;
+
+	public void setAppointId(String appointId) {
+		this.appointId = appointId;
 	}
+
 	public float getPrice() {
 		return price;
 	}
@@ -87,16 +89,16 @@ public class Appointment implements Serializable{
 	public void setDoctorAdvice(String doctorAdvice) {
 		this.doctorAdvice = doctorAdvice;
 	}
-	public String getPatientId() {
-		return patientId;
-	}
-	public void setPatientId(String patientId) {
-		this.patientId = patientId;
-	}
-	public String getDoctorId() {
-		return doctorId;
-	}
-	public void setDoctorId(String doctorId) {
-		this.doctorId = doctorId;
-	}
+//	public String getPatientId() {
+//		return patientId;
+//	}
+//	public void setPatientId(String patientId) {
+//		this.patientId = patientId;
+//	}
+//	public String getDoctorId() {
+//		return doctorId;
+//	}
+//	public void setDoctorId(String doctorId) {
+//		this.doctorId = doctorId;
+//	}
 }

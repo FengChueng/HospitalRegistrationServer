@@ -13,8 +13,10 @@ public interface HospitalDAO extends JpaRepository<Hospital, String>{
 
 	Page<Hospital> findByCreateDate(long date, Pageable pageable);
 
-	Page<Hospital> findByLevelAndGrade(int level, String grade, Pageable pageable);
+//	Page<Hospital> findByLocation(String location, Pageable pageable);
 
-	Page<Hospital> findByLocation(String location, Pageable pageable);
+	Page<Hospital> findByLevel(int level, Pageable pageable);
+
+	Page<Hospital> findByLocationLike(String location, Pageable pageable);
 	
 }

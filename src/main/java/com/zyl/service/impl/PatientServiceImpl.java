@@ -1,21 +1,13 @@
 package com.zyl.service.impl;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.zyl.domain.Appointment;
-import com.zyl.domain.Doctor;
-import com.zyl.domain.DoctorSchedule;
 import com.zyl.domain.Patient;
 import com.zyl.exception.ValidException;
-import com.zyl.jpa.AppointmentDAO;
-import com.zyl.jpa.DoctorDAO;
 import com.zyl.jpa.PatientDAO;
 import com.zyl.service.PatientService;
 import com.zyl.utils.DateUtil;
@@ -26,26 +18,35 @@ public class PatientServiceImpl implements PatientService{
 	@Autowired
 	private PatientDAO patientDAO;
 	
-	@Autowired
-	private DoctorDAO doctorDAO;
-	
-	@Autowired
-	private AppointmentDAO appointmentDAO;
-
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public void patientRegister(Patient newPatient) throws ValidException {
-		Patient patient = patientDAO.findOne(newPatient.getPatientAccount());
+	public Patient register(String patientAccount, String pwd) throws ValidException {
+		Patient patient = patientDAO.findOne(patientAccount);
 		if(patient!=null){
 			throw new ValidException("patient", "账号已注册");
 		}
-		patientDAO.saveAndFlush(newPatient);
+		patient = new Patient();
+		patient.setPatientAccount(patientAccount);
+		patient.setMobilePhone(patientAccount);
+		patient.setPassword(pwd);
+		patientDAO.saveAndFlush(patient);
+		
+		
+		return new Patient(patientAccount,pwd);
 	}
-
+	
+	
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public Patient queryByPatientId(String patientId) throws ValidException {
+	public Patient login(String patientId, String pwd) throws ValidException {
 		Patient patient = patientDAO.findOne(patientId);
+		if(patient == null){
+			throw new ValidException("patient", "账号未注册");
+		}
+		
+		if(!pwd.equals(patient.getPassword())){
+			throw new ValidException("patient", "密码错误");
+		}
 		return patient;
 	}
 
@@ -78,7 +79,7 @@ public class PatientServiceImpl implements PatientService{
 
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public void modifyPatientInfo(String patientId,String realName,int sex,long birthDay,String portraint) throws ValidException {
+	public void modifyPatientInfo(String patientId,String realName,int sex,long birthDay,String portraint,String mobilePhone) throws ValidException {
 		Patient patient = patientDAO.findOne(patientId);
 		if(patient == null){
 			throw new ValidException("patient", "账号未注册");
@@ -95,15 +96,24 @@ public class PatientServiceImpl implements PatientService{
 			patient.setSex(sex);
 		}
 		
+		if(mobilePhone!=null&&mobilePhone.length()>7){
+			patient.setMobilePhone(mobilePhone);
+		}
+		
 		if(portraint!=null&&"".equals(portraint)){
 			patient.setPortraint(portraint);
 		}
 		patientDAO.saveAndFlush(patient);
 	}
-
+	
 	@Override
-	public Patient login(String patientId, String pwd) {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
+	public Patient queryByPatientId(String patientId) throws ValidException {
+		Patient patient = patientDAO.findOne(patientId);
+		if(patient==null){
+			throw new ValidException("patient", "账号未注册");
+		}
+		return patient;
 	}
+
 }

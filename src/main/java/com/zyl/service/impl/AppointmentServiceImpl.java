@@ -18,6 +18,7 @@ import com.zyl.domain.Patient;
 import com.zyl.exception.ValidException;
 import com.zyl.jpa.AppointmentDAO;
 import com.zyl.jpa.DoctorDAO;
+import com.zyl.jpa.DoctorScheduleDAO;
 import com.zyl.jpa.PatientDAO;
 import com.zyl.service.AppointmentService;
 import com.zyl.utils.Constant;
@@ -33,6 +34,9 @@ public class AppointmentServiceImpl implements AppointmentService{
 	
 	@Autowired
 	private DoctorDAO doctorDAO;
+	
+	@Autowired
+	private DoctorScheduleDAO doctorScheduleDAO;
 	
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
@@ -112,7 +116,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 	
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public void makeAppointment(String patientId, String doctorId, float price, long clinicDate, long appointDate,
+	public void makeAppointment(String patientId, String doctorId,String doctorScheduleId ,float price, long clinicDate, long appointDate,
 			String location) throws ValidException {
 		Patient patient = patientDAO.findOne(patientId);
 		if(patient == null){
@@ -122,22 +126,17 @@ public class AppointmentServiceImpl implements AppointmentService{
 		if(doctor == null){
 			throw new ValidException("patient", "医生不存在");
 		}
-		Set<DoctorSchedule> doctors = doctor.getDoctorSchedules();
-		for (DoctorSchedule doctorSchedule : doctors) {
-			long scheduleDate = doctorSchedule.getScheduleDate();
-			if(clinicDate == scheduleDate){//就诊日期 == 医生工作日期
-				if(doctorSchedule.getStatus()==1){//可以预约
-					doctorSchedule.setAppointmentCount(doctorSchedule.getAppointmentCount()+1);
-					break;
-				}else{
-					throw new ValidException("appointment", "该医生预约已满");
-				}
-			}
+		DoctorSchedule doctorSchedule = doctorScheduleDAO.findOne(doctorScheduleId);
+		if(doctorSchedule.getStatus()==Constant.DOCTOR_SCHEDULE_POSSIBLE&&
+				doctorSchedule.getMaxAppointmentCount()>0){//可以预约
+			doctorSchedule.setMaxAppointmentCount(doctorSchedule.getMaxAppointmentCount()-1);
+			doctor.setOrderCount(doctor.getOrderCount()+1);
+		}else{
+			throw new ValidException("appointment", "该医生预约已满");
 		}
-		
 		Appointment appointment = new Appointment();
-		appointment.setDoctorId(doctorId);
-		appointment.setPatientId(patientId);
+//		appointment.setDoctorId(doctorId);
+//		appointment.setPatientId(patientId);
 		appointment.setLocation(location);
 		appointment.setPrice(price);
 		appointment.setClinicDate(clinicDate);
@@ -151,7 +150,5 @@ public class AppointmentServiceImpl implements AppointmentService{
 		doctor.setAppointments(appointments);
 		doctorDAO.saveAndFlush(doctor);
 		patientDAO.saveAndFlush(patient);
-		appointmentDAO.saveAndFlush(appointment);
 	}
-
 }

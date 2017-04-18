@@ -2,7 +2,6 @@ package com.zyl.domain;
 
 import java.io.Serializable;
 import java.util.Set;
-import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,7 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -51,6 +49,13 @@ public class Patient implements Serializable{
 	
 	public Patient() {
 	}
+
+	public Patient(String patientAccount, String mobilePhone) {
+		super();
+		this.patientAccount = patientAccount;
+		this.mobilePhone = mobilePhone;
+	}
+
 
 	public String getPatientAccount() {
 		return patientAccount;

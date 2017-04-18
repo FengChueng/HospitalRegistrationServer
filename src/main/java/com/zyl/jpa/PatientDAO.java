@@ -6,6 +6,4 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zyl.domain.Patient;
 @Transactional(rollbackFor=Exception.class)
 public interface PatientDAO extends JpaRepository<Patient, String>{
-
-	Patient findByPatientAccount(String mobilePhone);
 }

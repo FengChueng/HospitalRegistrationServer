@@ -32,8 +32,8 @@ public class Department implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@Column(name="id")
-	private String id;
+	@Column(name="dept_id")
+	private String deptId;
 	@Column(name="dept_name",nullable=false,unique=true)
 	private String deptName;//科室名称
 	@Column(name="info",nullable=false)
@@ -46,16 +46,20 @@ public class Department implements Serializable{
 	private Set<Doctor> doctors;
 	
 	public Department() {
-		id = UUID.randomUUID().toString();
+		deptId = UUID.randomUUID().toString();
 	}
 
-	public String getId() {
-		return id;
+	public String getDeptId() {
+		return deptId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+
+
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
 	}
+
+
 
 	public String getDeptName() {
 		return deptName;
