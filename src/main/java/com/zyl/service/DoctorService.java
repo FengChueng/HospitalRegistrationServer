@@ -26,25 +26,27 @@ public interface DoctorService {
 	Doctor queryDoctorByDoctorId(String doctorId) throws ValidException;
 	
 	/**
-	 * 根据姓名查询
-	 * @param name
-	 * @return
-	 * @throws ValidException 
-	 */
-	Doctor queryDoctorByName(String name) throws ValidException;
-	
-	/**
 	 * 根据账号id查询
 	 * @param accountId
 	 * @return
 	 */
-	Doctor queryDoctorByAccountId(String accountId);
+	Doctor queryDoctorByAccountId(String accountId) throws ValidException;
+	
+	/**
+	 * 模糊查询
+	 * @param name
+	 * @return
+	 * @throws ValidException
+	 */
+	List<Doctor> queryDoctorLikeName(String name) throws ValidException;
+	
+	
 	
 	/**
 	 * 根据deptId查询多个医生
 	 */
-	List<Doctor> queryDoctorsByDeptId(String deptId); 
-	
-	
+	List<Doctor> queryDoctorsByDeptId(String deptId) throws ValidException;
+
+	Doctor queryByDeptIdAndName(String deptId, String docName) throws ValidException;
 	
 }

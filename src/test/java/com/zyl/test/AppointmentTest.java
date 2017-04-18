@@ -51,7 +51,7 @@ public class AppointmentTest extends BaseTest{
 		int sex = 0;
 		long birthDay = date==null?0:date.getTime();
 		try {
-			accountService.updatePwd(mobilePhone,"123456");
+			accountService.resetPwd(mobilePhone,"123456");
 		} catch (ValidException e) {
 			e.printStackTrace();
 		}

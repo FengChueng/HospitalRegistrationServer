@@ -7,6 +7,5 @@ import com.zyl.domain.Patient;
 @Transactional(rollbackFor=Exception.class)
 public interface PatientDAO extends JpaRepository<Patient, String>{
 
-	Patient findByMobilePhone(String mobilePhone);
-
+	Patient findByPatientAccount(String mobilePhone);
 }

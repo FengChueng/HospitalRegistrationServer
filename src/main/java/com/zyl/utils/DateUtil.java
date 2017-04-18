@@ -11,6 +11,11 @@ public class DateUtil {
 		return getAge(StrToDate(birthDay));
 	}
 	
+	public static int getAge(long birthDay) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(birthDay);
+		return getAge(calendar.getTime());
+	}
 	
 	/**
 	 * 根据日期求出年龄

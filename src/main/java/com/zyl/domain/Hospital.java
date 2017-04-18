@@ -8,7 +8,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -16,7 +15,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
 
 /**
  * 医院表
@@ -53,6 +51,9 @@ public class Hospital implements Serializable{
 	private float longitude;//经度
 	@Column(name="latitude",nullable=true)
 	private float latitude;//纬度
+	
+	@Column(name="img",nullable=true)
+	private String img;
 	
 	@OneToMany(fetch=FetchType.EAGER,cascade={CascadeType.ALL},targetEntity=Department.class)
 	@JoinColumn(name="hospital_id",nullable=true)
@@ -116,6 +117,14 @@ public class Hospital implements Serializable{
 
 	public void setLocation(String location) {
 		this.location = location;
+	}
+	
+	public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
 	}
 
 	public float getLongitude() {

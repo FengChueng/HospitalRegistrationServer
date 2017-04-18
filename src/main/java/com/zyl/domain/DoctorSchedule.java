@@ -30,7 +30,11 @@ public class DoctorSchedule implements Serializable{
 	@Column(name="id")
 	private String id;
 	@Column(name="status",nullable=false)
-	private int status;//预约状态，0表示预约已满,不可预约、1表示可以被预约、2表示休息,不可预约
+	private int status;//预约状态，3001表示预约已满,不可预约、3002表示可以被预约、3003表示休息,不可预约
+	
+	@Column(name="appointment_count",nullable=false)
+	private int appointmentCount;//当天被预约次数
+	
 	@Column(name="schedule_date",nullable=false)
 	private long scheduleDate;//时间
 	
@@ -55,5 +59,10 @@ public class DoctorSchedule implements Serializable{
 	public void setScheduleDate(long scheduleDate) {
 		this.scheduleDate = scheduleDate;
 	}
-	
+	public int getAppointmentCount() {
+		return appointmentCount;
+	}
+	public void setAppointmentCount(int appointmentCount) {
+		this.appointmentCount = appointmentCount;
+	}
 }

@@ -2,9 +2,6 @@ package com.zyl.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import com.zyl.domain.Department;
 import com.zyl.exception.ValidException;
 
@@ -29,9 +26,9 @@ public interface DepartmentService {
 	 * @return
 	 * @throws ValidException 
 	 */
-	Department queryOneByHospitalNameAndDeparName(String hospitalName,String departName) throws ValidException;
+	Department queryOneByHospitalNameAndDepartName(String hospitalName,String departName) throws ValidException;
 	
-	Department queryOneByHospitalIdAndDeparName(String hospitalId,String departName) throws ValidException;
+	Department queryOneByHospitalIdAndDepartName(String hospitalId,String departName) throws ValidException;
 	
 	/**
 	 * 根据hospitalId查询所有
@@ -39,8 +36,6 @@ public interface DepartmentService {
 	 * @param page
 	 * @return
 	 */
-	Department queryAllByHospitalName(String hospitalName) throws ValidException;
-
-	Page<Department> queryAllByHospitalId(String hospitalId, Pageable pageable) throws ValidException;
+	List<Department> queryAllByHospitalId(String hospitalId) throws ValidException;
 	
 }

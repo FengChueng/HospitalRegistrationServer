@@ -8,13 +8,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,9 +24,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.zyl.bean.ResponseEntity;
+import com.zyl.service.DoctorService;
+import com.zyl.service.PatientService;
 import com.zyl.utils.Constant;
 
 /**
@@ -40,49 +41,21 @@ import com.zyl.utils.Constant;
 public class FileController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(FileController.class);
 	
+	@Autowired
+	private DoctorService doctorService;
+	
+	@Autowired
+	private PatientService patientService;
+	
+	
+	
 	@Value("${file.upload-path}")
     private String path;//文件路径
 	
 	@RequestMapping("/")    
-    public ModelAndView index(){    
-		return new ModelAndView("index");
-  } 
-
-//	/**
-//	 * 上传文件
-//	 * 
-//	 * @param file
-//	 * @return
-//	 */
-//	@RequestMapping("/upload")
-//	@ResponseBody
-//	public String uploadFile(@RequestParam("file") MultipartFile file) {
-//		if (!file.isEmpty()) {
-//			try {
-//				/*
-//				 * 这段代码执行完毕之后，图片上传到了工程的跟路径； 大家自己扩散下思维，如果我们想把图片上传到
-//				 * d:/files大家是否能实现呢？ 等等;
-//				 * 这里只是简单一个例子,请自行参考，融入到实际中可能需要大家自己做一些思考，比如： 1、文件路径； 2、文件名；
-//				 * 3、文件格式; 4、文件大小的限制;
-//				 */
-//				BufferedOutputStream out = new BufferedOutputStream(
-//						new FileOutputStream(new File(file.getOriginalFilename())));
-//				out.write(file.getBytes());
-//				out.flush();
-//				out.close();
-//			} catch (FileNotFoundException e) {
-//				e.printStackTrace();
-//				return "上传失败," + e.getMessage();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//				return "上传失败," + e.getMessage();
-//			}
-//			return "上传成功";
-//		} else {
-//			return "上传失败，因为文件是空的.";
-//		}
-//	}
-
+    public String index(){    
+		return "index";
+  }
 	/**
 	 * 上传用户头像
 	 * @param file
@@ -90,8 +63,11 @@ public class FileController {
 	 */
 	@RequestMapping("/upload/userportrait")
 	@ResponseBody
-	public ResponseEntity<String> upload(@RequestParam("roncooFile") MultipartFile file) {
+	public ResponseEntity<String> upload(@RequestParam("mobilePhone")String mobilePhone,@RequestParam("role") int role,@RequestParam("file") MultipartFile file) {
 		ResponseEntity<String> responseEntity = new ResponseEntity<>();
+		
+		
+		
 		if (file.isEmpty()) {
 			responseEntity.setStatus(Constant.FIAL);
 			responseEntity.setMsg("文件内容为空");
@@ -107,9 +83,11 @@ public class FileController {
 		// 文件上传路径
 		String filePath = path;
 		// 解决中文问题，liunx下中文路径，图片显示问题
-		fileName = UUID.randomUUID() + suffixName;
+		fileName = System.currentTimeMillis() + suffixName;
 		//将文件路径存至角色表中
 		//TODO
+		
+		
 		
 		File dest = new File(filePath,fileName);
 		// 检测是否存在目录
@@ -142,14 +120,28 @@ public class FileController {
         List<MultipartFile> files = ((MultipartHttpServletRequest) request)  
                 .getFiles("file");  
         MultipartFile file = null;  
-        BufferedOutputStream stream = null;  
+        BufferedOutputStream stream = null;
         for (int i = 0; i < files.size(); ++i) {  
             file = files.get(i);  
             if (!file.isEmpty()) {  
                 try {  
+                	// 获取文件名
+            		String fileName = file.getOriginalFilename();
+            		LOGGER.info("上传的文件名为:{}" + fileName);
+            		// 获取文件的后缀名
+            		String suffixName = fileName.substring(fileName.lastIndexOf("."));
+            		//LOGGER.info("上传的后缀名为:{}" + suffixName);
+            		// 文件上传路径
+            		fileName = System.currentTimeMillis() + suffixName;
+                    
+                    File dest = new File(path,fileName);
+            		// 检测是否存在目录
+            		if (!dest.getParentFile().exists()) {
+            			dest.getParentFile().mkdirs();
+            		}
                     byte[] bytes = file.getBytes();  
                     stream = new BufferedOutputStream(new FileOutputStream(  
-                            new File(file.getOriginalFilename())));  
+                            new File(dest.getAbsolutePath())));  
                     stream.write(bytes);  
                     stream.close();  
                 } catch (Exception e) {  

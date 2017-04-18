@@ -1,12 +1,11 @@
 package com.zyl.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -57,7 +56,7 @@ public class DepartmentServiceImpl implements DepartmentService{
 
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public Department queryOneByHospitalNameAndDeparName(String hospitalName, String departName) throws ValidException {
+	public Department queryOneByHospitalNameAndDepartName(String hospitalName, String departName) throws ValidException {
 		
 		Hospital hospital = hospitalDAO.findByHospitalName(hospitalName);
 		if(hospital==null){
@@ -79,7 +78,7 @@ public class DepartmentServiceImpl implements DepartmentService{
 	
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public Department queryOneByHospitalIdAndDeparName(String hospitalId, String departName) throws ValidException {
+	public Department queryOneByHospitalIdAndDepartName(String hospitalId, String departName) throws ValidException {
 		Hospital hospital = hospitalDAO.findOne(hospitalId);
 		if(hospital==null){
 			throw new ValidException("department", "不存在该医院");
@@ -101,21 +100,16 @@ public class DepartmentServiceImpl implements DepartmentService{
 
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public Page<Department> queryAllByHospitalId(String hospitalId, Pageable pageable) {
-		
-		
-		
-		
-		return null;
+	public List<Department> queryAllByHospitalId(String hospitalId) throws ValidException {
+		Hospital hospital = hospitalDAO.findOne(hospitalId);
+		if(hospital == null){
+			throw new ValidException("doctor", "没有查询到符合条件");
+		}
+		Set<Department> departments = hospital.getDepartments();
+		if(departments==null){
+			return null;
+		}else{
+			return new ArrayList<Department>(departments);
+		}
 	}
-
-	
-
-	@Override
-	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public Department queryAllByHospitalName(String hospitalName) throws ValidException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

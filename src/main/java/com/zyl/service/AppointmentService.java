@@ -1,24 +1,22 @@
 package com.zyl.service;
 
+import java.util.List;
+
 import com.zyl.domain.Appointment;
-import com.zyl.domain.Doctor;
-import com.zyl.domain.Patient;
 import com.zyl.exception.ValidException;
 
 public interface AppointmentService {
-	/**
-	 * 预约
-	 * @param appointment
-	 * @param patient
-	 * @param doctor
-	 * @throws ValidException
-	 */
-	void makeAppointment(Appointment appointment,Patient patient,Doctor doctor) throws ValidException;
+	void completeAppointment(String  appointId,String doctorAdvice) throws ValidException;
 	
-	
-	void completeAppointment(Appointment appointment) throws ValidException;
-	void completeAppointment(String  appointId) throws ValidException;
-	
-	void cancelAppointment(Appointment appointment) throws ValidException;
 	void cancelAppointment(String appointId) throws ValidException;
+
+	void startAppointment(String appointId) throws ValidException;
+
+	Appointment queryByAppointId(String appointId) throws ValidException;
+	
+	void makeAppointment(String patientId,String doctorId,float price,long clinicDate,long appointDate,String location) throws ValidException;
+
+	List<Appointment> queryByPatientId(String patientId) throws ValidException;
+
+	List<Appointment> queryByDoctorId(String doctorId) throws ValidException;
 }	

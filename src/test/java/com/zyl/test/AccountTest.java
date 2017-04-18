@@ -42,7 +42,7 @@ public class AccountTest extends BaseTest{
 	public void updateAccountInfo(){
 		
 		try {
-			accountService.updatePwd(mobilePhone,"123456");
+			accountService.resetPwd(mobilePhone,"123456");
 		} catch (ValidException e) {
 			e.printStackTrace();
 		}

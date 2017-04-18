@@ -3,13 +3,9 @@ package com.zyl.domain;
 import java.io.Serializable;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicInsert;
@@ -28,7 +24,7 @@ public class Appointment implements Serializable{
 	@Column(name="appoint_id")
 	private String orderId;//订单id
 	@Column(name="price",nullable=true)
-	private int price;//价格
+	private float price;//价格
 	@Column(name="clinic_date",nullable=true)
 	private long clinicDate;//就诊时间
 	@Column(name="appoint_date",nullable=true)
@@ -38,12 +34,13 @@ public class Appointment implements Serializable{
 	@Column(name="loc",nullable=true)
 	private String location;
 	
-	@OneToOne(fetch=FetchType.EAGER,cascade={CascadeType.ALL},targetEntity=Doctor.class)
-	@JoinColumn(name="doctor_id",nullable=false)
-	private Doctor doctor;//医生
-	@OneToOne(fetch=FetchType.EAGER,cascade={CascadeType.ALL},targetEntity=Patient.class)
-	@JoinColumn(name="patient_id",nullable=false)
-	private Patient patient;//病人
+	@Column(name="patient_id",nullable=true)
+	private String patientId;
+	@Column(name="doctor_id",nullable=true)
+	private String doctorId;
+	
+	@Column(name="doctor_advice",nullable=true)
+	private String doctorAdvice;//医嘱
 	
 	public Appointment() {
 		this.orderId = UUID.randomUUID().toString();
@@ -54,10 +51,10 @@ public class Appointment implements Serializable{
 	public void setOrderId(String orderId) {
 		this.orderId = orderId;
 	}
-	public int getPrice() {
+	public float getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(float price) {
 		this.price = price;
 	}
 	public long getClinicDate() {
@@ -84,17 +81,22 @@ public class Appointment implements Serializable{
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public Doctor getDoctor() {
-		return doctor;
+	public String getDoctorAdvice() {
+		return doctorAdvice;
 	}
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
+	public void setDoctorAdvice(String doctorAdvice) {
+		this.doctorAdvice = doctorAdvice;
 	}
-	public Patient getPatient() {
-		return patient;
+	public String getPatientId() {
+		return patientId;
 	}
-	public void setPatient(Patient patient) {
-		this.patient = patient;
+	public void setPatientId(String patientId) {
+		this.patientId = patientId;
 	}
-	
+	public String getDoctorId() {
+		return doctorId;
+	}
+	public void setDoctorId(String doctorId) {
+		this.doctorId = doctorId;
+	}
 }
