@@ -37,5 +37,13 @@ public interface DepartmentService {
 	 * @return
 	 */
 	List<Department> queryAllByHospitalId(String hospitalId) throws ValidException;
+
+	/**
+	 * 根据id查询
+	 * @param deptId
+	 * @return
+	 * @throws ValidException
+	 */
+	Department queryOneDepartId(String deptId) throws ValidException;
 	
 }

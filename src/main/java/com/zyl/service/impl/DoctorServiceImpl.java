@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.zyl.domain.Department;
 import com.zyl.domain.Doctor;
@@ -73,7 +74,7 @@ public class DoctorServiceImpl implements DoctorService {
 		if (doctor == null) {
 			throw new ValidException("patient", "账号未注册");
 		}
-		if (realName != null && !"".equals(realName)) {
+		if (StringUtils.isEmpty(realName)) {
 			doctor.setRealName(realName);
 		}
 
@@ -89,19 +90,17 @@ public class DoctorServiceImpl implements DoctorService {
 			doctor.setMobilePhone(mobilePhone);
 		}
 
-		if (portraint != null && !"".equals(portraint)) {
+		if (StringUtils.isEmpty(portraint)) {
 			doctor.setPortraint(portraint);
 		}
 		
-		if(info != null && !"".equals(info)){
+		if(StringUtils.isEmpty(doctor)){
 			doctor.setInfo(info);
 		}
 		
 		if(level!=0){
 			doctor.setLevel(level);
 		}
-		
-		
 
 		doctorDAO.saveAndFlush(doctor);
 	}

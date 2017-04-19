@@ -34,7 +34,6 @@ public class DepartmentServiceImpl implements DepartmentService{
 		Department department = departmentDAO.findByDeptName(newDepartment.getDeptName());
 		if(department==null){
 			Hospital hospital = hospitalDAO.findByHospitalName(hospitalName);
-			
 			Set<Department> departments = hospital.getDepartments();
 			if(CollectionUtils.isEmpty(departments)){//列表为空
 				departments = new HashSet<>();
@@ -57,17 +56,14 @@ public class DepartmentServiceImpl implements DepartmentService{
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
 	public Department queryOneByHospitalNameAndDepartName(String hospitalName, String departName) throws ValidException {
-		
 		Hospital hospital = hospitalDAO.findByHospitalName(hospitalName);
 		if(hospital==null){
 			throw new ValidException("department", "不存在该医院");
 		}
-		
 		Set<Department> departments = hospital.getDepartments();
 		if(CollectionUtils.isEmpty(departments)){//不存在
 			throw new ValidException("department", "不存在该科室");
 		}
-		
 		for (Department department : departments) {
 			if(departName.equals(department.getDeptName())){
 				return department;
@@ -88,7 +84,6 @@ public class DepartmentServiceImpl implements DepartmentService{
 		if(CollectionUtils.isEmpty(departments)){//不存在
 			throw new ValidException("department", "不存在该科室");
 		}
-		
 		for (Department department : departments) {
 			if(departName.equals(department.getDeptName())){
 				return department;
@@ -96,6 +91,18 @@ public class DepartmentServiceImpl implements DepartmentService{
 		}
 		return null;
 	}
+	
+	
+	@Override
+	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
+	public Department queryOneDepartId(String deptId) throws ValidException {
+		Department department = departmentDAO.findOne(deptId);
+		if(department==null){
+			throw new ValidException("department", "不存在该医院");
+		}
+		return department;
+	}
+	
 	
 
 	@Override
@@ -106,10 +113,10 @@ public class DepartmentServiceImpl implements DepartmentService{
 			throw new ValidException("doctor", "没有查询到符合条件");
 		}
 		Set<Department> departments = hospital.getDepartments();
-		if(departments==null){
-			return null;
+		if(CollectionUtils.isEmpty(departments)){
+			throw new ValidException("doctor", "没有查询到符合条件");
 		}else{
-			return new ArrayList<Department>(departments);
+			return new ArrayList<>(departments);
 		}
 	}
 }

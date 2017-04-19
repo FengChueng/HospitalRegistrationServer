@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,9 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zyl.bean.DoctorBean;
 import com.zyl.bean.ResponseEntity;
-import com.zyl.domain.Appointment;
 import com.zyl.domain.Doctor;
-import com.zyl.domain.DoctorSchedule;
 import com.zyl.exception.ValidException;
 import com.zyl.service.DoctorService;
 import com.zyl.utils.Constant;
@@ -35,7 +32,7 @@ public class DoctorController {
 
 	@RequestMapping("/doctor")
 	public String index() {
-		return "doctor";
+		return "doctorlogin";
 	}
 	
 	/**
@@ -52,17 +49,17 @@ public class DoctorController {
 		ResponseEntity<DoctorBean> responseEntity = new ResponseEntity<>();
 		try {
 			Doctor doctor = doctorService.login(account, pwd);
-			List<DoctorSchedule> doctorSchedules = null;
+			/*List<DoctorSchedule> doctorSchedules = null;
 			if (CollectionUtils.isEmpty(doctor.getDoctorSchedules())) {
 				doctorSchedules = new ArrayList<>(doctor.getDoctorSchedules());
 			}
 			List<Appointment> appointments = null;
 			if (CollectionUtils.isEmpty(doctor.getAppointments())) {
 				appointments = new ArrayList<>(doctor.getAppointments());
-			}
+			}*/
 			DoctorBean doctorBean = new DoctorBean(doctor.getDoctorAccount(), doctor.getRealName(), doctor.getAge(),
 					doctor.getSex(), doctor.getBirthDay(), doctor.getMobilePhone(), doctor.getPortraint(),
-					doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount(), doctorSchedules, appointments);
+					doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount());
 			responseEntity.setData(doctorBean);
 			responseEntity.setMsg("登录成功");
 		} catch (ValidException e) {
@@ -143,17 +140,17 @@ public class DoctorController {
 		ResponseEntity<DoctorBean> responseEntity = new ResponseEntity<>();
 		try {
 			Doctor doctor = doctorService.queryDoctorByDoctorAccount(account);
-			List<DoctorSchedule> doctorSchedules = null;
-			if (CollectionUtils.isEmpty(doctor.getDoctorSchedules())) {
-				doctorSchedules = new ArrayList<>(doctor.getDoctorSchedules());
-			}
-			List<Appointment> appointments = null;
-			if (CollectionUtils.isEmpty(doctor.getAppointments())) {
-				appointments = new ArrayList<>(doctor.getAppointments());
-			}
+			//List<DoctorSchedule> doctorSchedules = null;
+//			if (CollectionUtils.isEmpty(doctor.getDoctorSchedules())) {
+//				doctorSchedules = new ArrayList<>(doctor.getDoctorSchedules());
+//			}
+//			List<Appointment> appointments = null;
+//			if (CollectionUtils.isEmpty(doctor.getAppointments())) {
+//				appointments = new ArrayList<>(doctor.getAppointments());
+//			}
 			DoctorBean doctorBean = new DoctorBean(doctor.getDoctorAccount(), doctor.getRealName(), doctor.getAge(),
 					doctor.getSex(), doctor.getBirthDay(), doctor.getMobilePhone(), doctor.getPortraint(),
-					doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount(), doctorSchedules, appointments);
+					doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount());
 			responseEntity.setData(doctorBean);
 			responseEntity.setMsg("查询成功");
 		} catch (ValidException e) {
@@ -170,17 +167,17 @@ public class DoctorController {
 		ResponseEntity<DoctorBean> responseEntity = new ResponseEntity<>();
 		try {
 			Doctor doctor = doctorService.queryByDeptIdAndName(deptId, doctorName);
-			List<DoctorSchedule> doctorSchedules = null;
-			if (CollectionUtils.isEmpty(doctor.getDoctorSchedules())) {
-				doctorSchedules = new ArrayList<>(doctor.getDoctorSchedules());
-			}
-			List<Appointment> appointments = null;
-			if (CollectionUtils.isEmpty(doctor.getAppointments())) {
-				appointments = new ArrayList<>(doctor.getAppointments());
-			}
+//			List<DoctorSchedule> doctorSchedules = null;
+//			if (CollectionUtils.isEmpty(doctor.getDoctorSchedules())) {
+//				doctorSchedules = new ArrayList<>(doctor.getDoctorSchedules());
+//			}
+//			List<Appointment> appointments = null;
+//			if (CollectionUtils.isEmpty(doctor.getAppointments())) {
+//				appointments = new ArrayList<>(doctor.getAppointments());
+//			}
 			DoctorBean doctorBean = new DoctorBean(doctor.getDoctorAccount(), doctor.getRealName(), doctor.getAge(),
 					doctor.getSex(), doctor.getBirthDay(), doctor.getMobilePhone(), doctor.getPortraint(),
-					doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount(), doctorSchedules, appointments);
+					doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount());
 			responseEntity.setData(doctorBean);
 			responseEntity.setMsg("查询成功");
 		} catch (ValidException e) {
@@ -199,17 +196,17 @@ public class DoctorController {
 		try {
 			List<Doctor> doctors = doctorService.queryDoctorsByDeptId(deptId);
 			for (Doctor doctor : doctors) {
-				List<DoctorSchedule> doctorSchedules = null;
-				if (CollectionUtils.isEmpty(doctor.getDoctorSchedules())) {
-					doctorSchedules = new ArrayList<>(doctor.getDoctorSchedules());
-				}
-				List<Appointment> appointments = null;
-				if (CollectionUtils.isEmpty(doctor.getAppointments())) {
-					appointments = new ArrayList<>(doctor.getAppointments());
-				}
+				//List<DoctorSchedule> doctorSchedules = null;
+//				if (CollectionUtils.isEmpty(doctor.getDoctorSchedules())) {
+//					doctorSchedules = new ArrayList<>(doctor.getDoctorSchedules());
+//				}
+//				List<Appointment> appointments = null;
+//				if (CollectionUtils.isEmpty(doctor.getAppointments())) {
+//					appointments = new ArrayList<>(doctor.getAppointments());
+//				}
 				DoctorBean doctorBean = new DoctorBean(doctor.getDoctorAccount(), doctor.getRealName(), doctor.getAge(),
 						doctor.getSex(), doctor.getBirthDay(), doctor.getMobilePhone(), doctor.getPortraint(),
-						doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount(), doctorSchedules, appointments);
+						doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount());
 				doctorBeans.add(doctorBean);
 			}
 
@@ -232,17 +229,17 @@ public class DoctorController {
 		try {
 			List<Doctor> doctors = doctorService.queryDoctorLikeName(doctorName);
 			for (Doctor doctor : doctors) {
-				List<DoctorSchedule> doctorSchedules = null;
-				if (CollectionUtils.isEmpty(doctor.getDoctorSchedules())) {
-					doctorSchedules = new ArrayList<>(doctor.getDoctorSchedules());
-				}
-				List<Appointment> appointments = null;
-				if (CollectionUtils.isEmpty(doctor.getAppointments())) {
-					appointments = new ArrayList<>(doctor.getAppointments());
-				}
+//				List<DoctorSchedule> doctorSchedules = null;
+//				if (CollectionUtils.isEmpty(doctor.getDoctorSchedules())) {
+//					doctorSchedules = new ArrayList<>(doctor.getDoctorSchedules());
+//				}
+//				List<Appointment> appointments = null;
+//				if (CollectionUtils.isEmpty(doctor.getAppointments())) {
+//					appointments = new ArrayList<>(doctor.getAppointments());
+//				}
 				DoctorBean doctorBean = new DoctorBean(doctor.getDoctorAccount(), doctor.getRealName(), doctor.getAge(),
 						doctor.getSex(), doctor.getBirthDay(), doctor.getMobilePhone(), doctor.getPortraint(),
-						doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount(), doctorSchedules, appointments);
+						doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount());
 				doctorBeans.add(doctorBean);
 			}
 			responseEntity.setData(doctorBeans);

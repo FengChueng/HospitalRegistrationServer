@@ -1,11 +1,7 @@
 package com.zyl.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -14,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zyl.bean.PatientBean;
 import com.zyl.bean.ResponseEntity;
-import com.zyl.domain.Appointment;
 import com.zyl.domain.Patient;
 import com.zyl.exception.ValidException;
 import com.zyl.service.PatientService;
@@ -32,8 +27,8 @@ public class PatientController {
 	@Autowired
 	private PatientService patientService;
 
-	@RequestMapping("/patient")
-	public String index() {
+	@RequestMapping("/loginPage")
+	public String loginPage() {
 		return "login";
 	}
 
@@ -49,7 +44,7 @@ public class PatientController {
 			@RequestParam(value = "pwd", required = true) String pwd) {
 		ResponseEntity<PatientBean> responseEntity = new ResponseEntity<>();
 		try {
-			Patient patient = patientService.register(account, pwd);
+			patientService.register(account, pwd);
 			// List<Appointment> appointments = null;
 			// if (CollectionUtils.isEmpty(patient.getAppointments())) {
 			// appointments = new ArrayList<>(patient.getAppointments());
@@ -75,13 +70,16 @@ public class PatientController {
 		ResponseEntity<PatientBean> responseEntity = new ResponseEntity<>();
 		try {
 			Patient patient = patientService.login(account, pwd);
-			List<Appointment> appointments = null;
+			/*List<Appointment> appointments = null;
 			if (CollectionUtils.isEmpty(patient.getAppointments())) {
 				appointments = new ArrayList<>(patient.getAppointments());
-			}
+			}*/
+//			PatientBean patientBean = new PatientBean(patient.getPatientAccount(), patient.getRealName(),
+//					patient.getAge(), patient.getSex(), patient.getBirthDay(), patient.getMobilePhone(),
+//					patient.getPortraint(), appointments);
 			PatientBean patientBean = new PatientBean(patient.getPatientAccount(), patient.getRealName(),
 					patient.getAge(), patient.getSex(), patient.getBirthDay(), patient.getMobilePhone(),
-					patient.getPortraint(), appointments);
+					patient.getPortraint());
 			responseEntity.setData(patientBean);
 			responseEntity.setMsg("登录成功");
 		} catch (ValidException e) {
@@ -98,13 +96,13 @@ public class PatientController {
 		ResponseEntity<PatientBean> responseEntity = new ResponseEntity<>();
 		try {
 			Patient patient = patientService.queryByPatientId(account);
-			List<Appointment> appointments = null;
-			if (CollectionUtils.isEmpty(patient.getAppointments())) {
-				appointments = new ArrayList<>(patient.getAppointments());
-			}
+//			List<Appointment> appointments = null;
+//			if (CollectionUtils.isEmpty(patient.getAppointments())) {
+//				appointments = new ArrayList<>(patient.getAppointments());
+//			}
 			PatientBean patientBean = new PatientBean(patient.getPatientAccount(), patient.getRealName(),
 					patient.getAge(), patient.getSex(), patient.getBirthDay(), patient.getMobilePhone(),
-					patient.getPortraint(), appointments);
+					patient.getPortraint());
 			responseEntity.setData(patientBean);
 			responseEntity.setMsg("查询成功");
 		} catch (ValidException e) {
@@ -163,13 +161,13 @@ public class PatientController {
 		try {
 			patientService.modifyPatientInfo(account, realName, sex, birthDay, portraint, mobilePhone);
 			Patient patient = patientService.queryByPatientId(account);
-			List<Appointment> appointments = null;
-			if (CollectionUtils.isEmpty(patient.getAppointments())) {
-				appointments = new ArrayList<>(patient.getAppointments());
-			}
+//			List<Appointment> appointments = null;
+//			if (CollectionUtils.isEmpty(patient.getAppointments())) {
+//				appointments = new ArrayList<>(patient.getAppointments());
+//			}
 			PatientBean patientBean = new PatientBean(patient.getPatientAccount(), patient.getRealName(),
 					patient.getAge(), patient.getSex(), patient.getBirthDay(), patient.getMobilePhone(),
-					patient.getPortraint(), appointments);
+					patient.getPortraint());
 			responseEntity.setData(patientBean);
 			responseEntity.setMsg("修改成功");
 		} catch (ValidException e) {

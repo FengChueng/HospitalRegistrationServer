@@ -30,6 +30,15 @@ public interface HospitalService {
 	 */
 	Page<Hospital> queryByCreatedDate(long date,Pageable pageable) throws ValidException;
 	
+	
+	/**
+	 * 按id查询
+	 * @param hospitalName
+	 * @throws ValidException 
+	 */
+	Hospital queryByHospitalId(String hospitalId) throws ValidException;
+	
+	
 	/**
 	 * 按名字查询
 	 * @param hospitalName

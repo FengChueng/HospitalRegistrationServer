@@ -55,7 +55,7 @@ public class FileController {
 	
 	@RequestMapping("/file")
 	public String index() {
-		return "index";
+		return "file";
 	}
 	/**
 	 * 上传用户头像

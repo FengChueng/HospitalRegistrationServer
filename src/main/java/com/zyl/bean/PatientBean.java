@@ -18,13 +18,13 @@ public class PatientBean implements Serializable{
 	private String mobilePhone;// 联系电话
 	private String portraint;//用户头像
 
-	private List<Appointment> appointments;
+//	private List<Appointment> appointments;
 	
 	public PatientBean() {
 	}
 
 	public PatientBean(String patientAccount, String realName, int age, int sex, long birthDay,
-			String mobilePhone, String portraint, List<Appointment> appointments) {
+			String mobilePhone, String portraint) {
 		super();
 		this.patientAccount = patientAccount;
 		this.realName = realName;
@@ -33,7 +33,7 @@ public class PatientBean implements Serializable{
 		this.birthDay = birthDay;
 		this.mobilePhone = mobilePhone;
 		this.portraint = portraint;
-		this.appointments = appointments;
+//		this.appointments = appointments;
 	}
 
 	public PatientBean(String patientAccount, String mobilePhone) {
@@ -97,12 +97,12 @@ public class PatientBean implements Serializable{
 		this.portraint = portraint;
 	}
 
-	public List<Appointment> getAppointments() {
-		return appointments;
-	}
-
-	public void setAppointments(List<Appointment> appointments) {
-		this.appointments = appointments;
-	}
+//	public List<Appointment> getAppointments() {
+//		return appointments;
+//	}
+//
+//	public void setAppointments(List<Appointment> appointments) {
+//		this.appointments = appointments;
+//	}
 
 }

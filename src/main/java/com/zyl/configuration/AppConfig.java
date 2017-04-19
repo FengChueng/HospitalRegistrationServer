@@ -21,16 +21,22 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
-		registry.addViewController("/file/index").setViewName("/index");
+		registry.addViewController("/file/operation").setViewName("/file");
 		
 		
-		registry.addViewController("/docter/doctor").setViewName("/doctor");
+		registry.addViewController("/docter/loginpage").setViewName("/doctorlogin");
 		
-		registry.addViewController("/patient/login").setViewName("/login");
+		registry.addViewController("/patient/loginPage").setViewName("/login");
 		
-		registry.addViewController("/registerpage/register").setViewName("/register");
+		registry.addViewController("/patient/registerpage").setViewName("/register");
 		
 		registry.addViewController("/hospital/index").setViewName("/hospital");
+		
+		registry.addViewController("/department/index").setViewName("/department");
+		
+		registry.addViewController("/appointment/index").setViewName("/appointment");
+		
+		registry.addViewController("/schedule/index").setViewName("/schedule");
 	}
 
 }

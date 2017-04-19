@@ -57,8 +57,13 @@ public class HopitalServiceImpl implements HospitalService{
 
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public Page<Hospital> queryByCreatedDate(long date,Pageable pageable) {
-		return hospitalDAO.findByCreateDate(date,pageable);
+	public Page<Hospital> queryByCreatedDate(long date,Pageable pageable) throws ValidException {
+		Page<Hospital> hpPage = hospitalDAO.findByCreateDate(date,pageable);
+		if(hpPage != null&&hpPage.getSize()!=0){
+			return hpPage;
+		}else{
+			throw new ValidException("hospital", "无数据");
+		}
 	}
 
 	
@@ -67,17 +72,30 @@ public class HopitalServiceImpl implements HospitalService{
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
 	public Page<Hospital> queryByLevel(int level,Pageable pageable) throws ValidException {
 		Page<Hospital> hpPage = hospitalDAO.findByLevel(level,pageable);
-		
-		if(hpPage == null){
+		if(hpPage != null&&hpPage.getSize()!=0){
+			return hpPage;
+		}else{
 			throw new ValidException("hospital", "无数据");
 		}
-		
-		return hpPage;
 	}
 
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public Page<Hospital> queryByLocation(String location,Pageable pageable) {
-		return hospitalDAO.findByLocationLike(location,pageable);
+	public Page<Hospital> queryByLocation(String location,Pageable pageable) throws ValidException {
+		Page<Hospital> hpPage = hospitalDAO.findByLocationLike(location,pageable);
+		if(hpPage != null&&hpPage.getSize()!=0){
+			return hpPage;
+		}else{
+			throw new ValidException("hospital", "无数据");
+		}
+	}
+
+	@Override
+	public Hospital queryByHospitalId(String hospitalId) throws ValidException {
+		Hospital hospital = hospitalDAO.findOne(hospitalId);
+		if(hospital == null){
+			throw new ValidException("hospital", "未查找到该医院");
+		}
+		return hospital;
 	}
 }

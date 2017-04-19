@@ -6,6 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zyl.domain.Doctor;
+
+/**
+ * 操作Doctor表的DAO层
+ * @author Administrator
+ *
+ */
 @Transactional(rollbackFor=Exception.class)
 public interface DoctorDAO extends JpaRepository<Doctor, String>{
 

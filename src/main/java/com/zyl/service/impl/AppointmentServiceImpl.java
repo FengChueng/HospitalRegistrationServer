@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import com.zyl.domain.Appointment;
 import com.zyl.domain.Doctor;
@@ -37,6 +38,45 @@ public class AppointmentServiceImpl implements AppointmentService{
 	
 	@Autowired
 	private DoctorScheduleDAO doctorScheduleDAO;
+	
+	@Override
+	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
+	public void makeAppointment(String patientId, String doctorId,String doctorScheduleId ,float price, long clinicDate, long appointDate,
+			String location) throws ValidException {
+		Patient patient = patientDAO.findOne(patientId);
+		if(patient == null){
+			throw new ValidException("patient", "用户不存在");
+		}
+		Doctor doctor = doctorDAO.findOne(doctorId);
+		if(doctor == null){
+			throw new ValidException("patient", "医生不存在");
+		}
+		DoctorSchedule doctorSchedule = doctorScheduleDAO.findOne(doctorScheduleId);
+		if(doctorSchedule.getStatus()==Constant.DOCTOR_SCHEDULE_POSSIBLE&&
+				doctorSchedule.getMaxAppointmentCount()>0){//可以预约
+			doctorSchedule.setMaxAppointmentCount(doctorSchedule.getMaxAppointmentCount()-1);
+			doctor.setOrderCount(doctor.getOrderCount()+1);
+		}else{
+			throw new ValidException("appointment", "该医生预约已满");
+		}
+		Appointment appointment = new Appointment();
+		appointment.setDoctorId(doctorId);
+		appointment.setPatientId(patientId);
+		appointment.setLocation(location);
+		appointment.setPrice(price);
+		appointment.setClinicDate(clinicDate);
+		appointment.setAppointDate(appointDate);
+		Set<Appointment> appointments = patient.getAppointments();
+		if(appointments == null){
+			appointments = new HashSet<>();
+		}
+		appointments.add(appointment);
+		patient.setAppointments(appointments);
+		doctor.setAppointments(appointments);
+		doctorDAO.saveAndFlush(doctor);
+		patientDAO.saveAndFlush(patient);
+	}
+	
 	
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
@@ -113,42 +153,22 @@ public class AppointmentServiceImpl implements AppointmentService{
 		
 	}
 	
-	
 	@Override
-	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public void makeAppointment(String patientId, String doctorId,String doctorScheduleId ,float price, long clinicDate, long appointDate,
-			String location) throws ValidException {
-		Patient patient = patientDAO.findOne(patientId);
-		if(patient == null){
-			throw new ValidException("patient", "用户不存在");
+	public List<Appointment> queryByPatientIdAndStatus(String patientId, int status) throws ValidException {
+		List<Appointment> appointments = appointmentDAO.findByPatientIdAndStatus(patientId,status);
+		if(CollectionUtils.isEmpty(appointments)){
+			throw new ValidException("appointment", "暂无数据");
 		}
-		Doctor doctor = doctorDAO.findOne(doctorId);
-		if(doctor == null){
-			throw new ValidException("patient", "医生不存在");
+		return appointments;
+	}
+
+
+	@Override
+	public List<Appointment> queryByDoctorIdAndStatus(String doctorId, int status) throws ValidException {
+		List<Appointment> appointments = appointmentDAO.findByDoctorIdAndStatus(doctorId,status);
+		if(CollectionUtils.isEmpty(appointments)){
+			throw new ValidException("appointment", "暂无数据");
 		}
-		DoctorSchedule doctorSchedule = doctorScheduleDAO.findOne(doctorScheduleId);
-		if(doctorSchedule.getStatus()==Constant.DOCTOR_SCHEDULE_POSSIBLE&&
-				doctorSchedule.getMaxAppointmentCount()>0){//可以预约
-			doctorSchedule.setMaxAppointmentCount(doctorSchedule.getMaxAppointmentCount()-1);
-			doctor.setOrderCount(doctor.getOrderCount()+1);
-		}else{
-			throw new ValidException("appointment", "该医生预约已满");
-		}
-		Appointment appointment = new Appointment();
-//		appointment.setDoctorId(doctorId);
-//		appointment.setPatientId(patientId);
-		appointment.setLocation(location);
-		appointment.setPrice(price);
-		appointment.setClinicDate(clinicDate);
-		appointment.setAppointDate(appointDate);
-		Set<Appointment> appointments = patient.getAppointments();
-		if(appointments == null){
-			appointments = new HashSet<>();
-		}
-		appointments.add(appointment);
-		patient.setAppointments(appointments);
-		doctor.setAppointments(appointments);
-		doctorDAO.saveAndFlush(doctor);
-		patientDAO.saveAndFlush(patient);
+		return appointments;
 	}
 }

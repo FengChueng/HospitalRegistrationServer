@@ -5,11 +5,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.zyl.domain.Patient;
 import com.zyl.exception.ValidException;
 import com.zyl.jpa.PatientDAO;
 import com.zyl.service.PatientService;
+import com.zyl.utils.Constant;
 import com.zyl.utils.DateUtil;
 
 @Repository
@@ -84,7 +86,7 @@ public class PatientServiceImpl implements PatientService{
 		if(patient == null){
 			throw new ValidException("patient", "账号未注册");
 		}
-		if(realName!=null&&"".equals(realName)){
+		if(!StringUtils.isEmpty(realName)){
 			patient.setRealName(realName);
 		}
 		
@@ -92,15 +94,14 @@ public class PatientServiceImpl implements PatientService{
 			patient.setBirthDay(birthDay);
 			patient.setAge(DateUtil.getAge(birthDay));
 		}
-		if(sex==0||sex==1){
+		if(sex==Constant.SEX_MALE||sex==Constant.SEX_FEMALE){
 			patient.setSex(sex);
 		}
 		
-		if(mobilePhone!=null&&mobilePhone.length()>7){
+		if(!StringUtils.isEmpty(mobilePhone)){
 			patient.setMobilePhone(mobilePhone);
 		}
-		
-		if(portraint!=null&&"".equals(portraint)){
+		if(!StringUtils.isEmpty(portraint)){
 			patient.setPortraint(portraint);
 		}
 		patientDAO.saveAndFlush(patient);

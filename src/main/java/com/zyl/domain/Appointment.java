@@ -34,10 +34,10 @@ public class Appointment implements Serializable{
 	@Column(name="loc",nullable=true)
 	private String location;
 	
-//	@Column(name="patient_id",nullable=true)
-//	private String patientId;
-//	@Column(name="doctor_id",nullable=true)
-//	private String doctorId;
+	@Column(name="patient_id",nullable=true)
+	private String patientId;
+	@Column(name="doctor_id",nullable=true)
+	private String doctorId;
 	
 	@Column(name="doctor_advice",nullable=true)
 	private String doctorAdvice;//医嘱
@@ -89,16 +89,16 @@ public class Appointment implements Serializable{
 	public void setDoctorAdvice(String doctorAdvice) {
 		this.doctorAdvice = doctorAdvice;
 	}
-//	public String getPatientId() {
-//		return patientId;
-//	}
-//	public void setPatientId(String patientId) {
-//		this.patientId = patientId;
-//	}
-//	public String getDoctorId() {
-//		return doctorId;
-//	}
-//	public void setDoctorId(String doctorId) {
-//		this.doctorId = doctorId;
-//	}
+	public String getPatientId() {
+		return patientId;
+	}
+	public void setPatientId(String patientId) {
+		this.patientId = patientId;
+	}
+	public String getDoctorId() {
+		return doctorId;
+	}
+	public void setDoctorId(String doctorId) {
+		this.doctorId = doctorId;
+	}
 }

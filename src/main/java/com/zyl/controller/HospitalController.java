@@ -44,6 +44,7 @@ public class HospitalController {
 		ResponseEntity<Hospital> responseEntity = new ResponseEntity<>();
 		try {
 			Hospital hospital = hospitalService.queryByHospitalName(hospitalName);
+			hospital.setDepartments(null);//避免返回给客户端数据过多
 			responseEntity.setData(hospital);
 			responseEntity.setMsg("查询成功");
 		} catch (ValidException e) {
@@ -65,6 +66,7 @@ public class HospitalController {
 		    Pageable pageable = new PageRequest(page, size, sort);
 		    Page<Hospital> hospitalPage = hospitalService.queryByLevel(level, pageable);
 		    for (Hospital hospital : hospitalPage) {
+		    	hospital.setDepartments(null);//避免返回给客户端数据过多
 				hospitals.add(hospital);
 			}
 			responseEntity.setData(hospitals);
@@ -88,6 +90,7 @@ public class HospitalController {
 		    Pageable pageable = new PageRequest(page, size, sort);
 		    Page<Hospital> hospitalPage = hospitalService.queryByLocation(location, pageable);
 		    for (Hospital hospital : hospitalPage) {
+		    	hospital.setDepartments(null);//避免返回给客户端数据过多
 				hospitals.add(hospital);
 			}
 			responseEntity.setData(hospitals);
