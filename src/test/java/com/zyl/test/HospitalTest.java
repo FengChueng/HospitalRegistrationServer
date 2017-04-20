@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,7 +37,7 @@ public class HospitalTest extends BaseTest{
 	@Value("${file.userportraint-path}")
     private String path;//文件路径
 	
-	@Test
+	@Test @Ignore
 	//@Transactional
 	public void insertHospital() {
 		try {

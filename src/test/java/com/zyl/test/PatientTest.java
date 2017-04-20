@@ -26,7 +26,7 @@ public class PatientTest extends BaseTest {
 	@Value("${file.userportraint-path}")
 	private String path;
 
-	@Test
+	@Test @Ignore
 	@Transactional
 	public void addAccount() {
 		String mobilePhone = "18380586504";
@@ -41,7 +41,7 @@ public class PatientTest extends BaseTest {
 		}
 	}
 	
-	@Test
+	@Test @Ignore
 	public void modifyAccount(){
 		String mobilePhone = "18380586504";
 		Date birthDay = DateUtil.parseStrToDate("1995-09-27");

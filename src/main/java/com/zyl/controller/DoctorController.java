@@ -133,7 +133,7 @@ public class DoctorController {
 		return responseEntity;
 	}
 
-	@RequestMapping(value = "/doctor/queryDoctorByDoctorAccount", method = RequestMethod.POST)
+	@RequestMapping(value = "/doctor/queryDoctorByDoctorAccount", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<DoctorBean> queryByAccountId(
 			@RequestParam(value = "account", required = true) String account) {
@@ -160,7 +160,7 @@ public class DoctorController {
 		return responseEntity;
 	}
 
-	@RequestMapping(value = "/doctor/queryByDeptIdAndName", method = RequestMethod.POST)
+	@RequestMapping(value = "/doctor/queryByDeptIdAndName", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<DoctorBean> queryByAccountId(@RequestParam(value = "deptId", required = true) String deptId,
 			@RequestParam(value = "doctorName", required = true) String doctorName) {
@@ -187,7 +187,7 @@ public class DoctorController {
 		return responseEntity;
 	}
 
-	@RequestMapping(value = "/doctor/queryDoctorsByDeptId", method = RequestMethod.POST)
+	@RequestMapping(value = "/doctor/queryDoctorsByDeptId", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<DoctorBean>> queryByDeptId(
 			@RequestParam(value = "deptId", required = true) String deptId) {
@@ -220,7 +220,7 @@ public class DoctorController {
 		return responseEntity;
 	}
 
-	@RequestMapping(value = "/doctor/queryByNameLike", method = RequestMethod.POST)
+	@RequestMapping(value = "/doctor/queryByNameLike", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<DoctorBean>> queryByNameLike(
 			@RequestParam(value = "doctorName", required = true) String doctorName) {

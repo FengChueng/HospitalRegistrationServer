@@ -21,7 +21,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+		<java.version>1.7</java.version>
 		<spring.version>4.3.7.RELEASE</spring.version>
 		<spring.boot.version>1.5.2.RELEASE</spring.boot.version>
 	</properties>
@@ -70,6 +70,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+		
+		<!-- h2sh -->
+		<!-- <dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+		</dependency> -->
+		
 		<!-- Spring Bean注入 -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -85,8 +92,8 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<encoding>utf8</encoding>
 				</configuration>
 			</plugin>
@@ -101,9 +108,16 @@
 				<configuration>
 					<executable>true</executable>
 				</configuration>
-				<!-- <executions> <execution> <goals> <goal>repackage</goal> </goals> 
-					<configuration> <classifier>exec</classifier> </configuration> </execution> 
-					</executions> -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+						<configuration>
+							<classifier>exec</classifier>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
