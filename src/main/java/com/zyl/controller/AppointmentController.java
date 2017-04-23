@@ -24,6 +24,29 @@ public class AppointmentController {
 	public String index() {
 		return "appointment";
 	}
+	
+	
+	@RequestMapping(value = "/appointment/makeappointment", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Appointment> makeAppointment(
+			@RequestParam(value = "patientId", required = true) String patientId,
+			@RequestParam(value = "doctorId", required = true) String doctorId,
+			@RequestParam(value = "doctorScheduleId", required = true) String doctorScheduleId,
+			@RequestParam(value = "price", required = true) float price,
+			@RequestParam(value = "clinicDate", required = true) long clinicDate,
+			@RequestParam(value = "appointDate", required = true) long appointDate,
+			@RequestParam(value = "location") String location) {
+		ResponseEntity<Appointment> responseEntity = new ResponseEntity<>();
+		try {
+			appointmentService.makeAppointment(patientId, doctorId, doctorScheduleId, price, clinicDate, appointDate, location);
+			responseEntity.setData(null);
+			responseEntity.setMsg("预约成功");
+		} catch (ValidException e) {
+			responseEntity.setStatus(Constant.FIAL);
+			responseEntity.setMsg(e.getMessage());
+		}
+		return responseEntity;
+	}
 
 	/**
 	 * doctorId查询预约

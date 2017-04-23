@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +35,31 @@ public class HospitalController {
 	public String index() {
 		return "hospital";
 	}
+	
+	
+	@RequestMapping(value = "/hospital/queryall", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<Hospital>> queryAll(@RequestParam(value = "page",defaultValue="0") int page,
+			@RequestParam(value = "size",defaultValue="30") int size){
+		ResponseEntity<List<Hospital>> responseEntity = new ResponseEntity<>();
+		List<Hospital> hospitals = new ArrayList<>();
+		try {
+			//Sort sort = new Sort(Sort.Direction.DESC, "realName");  
+		    Pageable pageable = new PageRequest(page, size);
+		    Page<Hospital> hospitalPage = hospitalService.queryAll(pageable);
+		    for (Hospital hospital : hospitalPage) {
+		    	hospital.setDepartments(null);//避免返回给客户端数据过多
+				hospitals.add(hospital);
+			}
+			responseEntity.setData(hospitals);
+			responseEntity.setMsg("查询成功");
+		} catch (ValidException e) {
+			responseEntity.setStatus(Constant.FIAL);
+			responseEntity.setMsg(e.getMessage());
+		}
+		return responseEntity;
+	}
+	
 
 	// 病人controller
 	@RequestMapping(value = "/hospital/queryByHospitalName", method = RequestMethod.GET)
@@ -62,8 +86,8 @@ public class HospitalController {
 		ResponseEntity<List<Hospital>> responseEntity = new ResponseEntity<>();
 		List<Hospital> hospitals = new ArrayList<>();
 		try {
-			Sort sort = new Sort(Sort.Direction.DESC, "realName");  
-		    Pageable pageable = new PageRequest(page, size, sort);
+			//Sort sort = new Sort(Sort.Direction.DESC, "realName");  
+		    Pageable pageable = new PageRequest(page, size);
 		    Page<Hospital> hospitalPage = hospitalService.queryByLevel(level, pageable);
 		    for (Hospital hospital : hospitalPage) {
 		    	hospital.setDepartments(null);//避免返回给客户端数据过多
@@ -86,8 +110,8 @@ public class HospitalController {
 		ResponseEntity<List<Hospital>> responseEntity = new ResponseEntity<>();
 		List<Hospital> hospitals = new ArrayList<>();
 		try {
-			Sort sort = new Sort(Sort.Direction.DESC, "realName");  
-		    Pageable pageable = new PageRequest(page, size, sort);
+			//Sort sort = new Sort(Sort.Direction.DESC, "realName");  
+		    Pageable pageable = new PageRequest(page, size);
 		    Page<Hospital> hospitalPage = hospitalService.queryByLocation(location, pageable);
 		    for (Hospital hospital : hospitalPage) {
 		    	hospital.setDepartments(null);//避免返回给客户端数据过多

@@ -23,6 +23,17 @@ public interface HospitalService {
 	 */
 	void insertHospitals(List<Hospital> hospitals) throws ValidException;
 	
+	
+	/**
+	 * 查询所有
+	 * @param pageable
+	 * @return
+	 * @throws ValidException
+	 */
+	Page<Hospital> queryAll(Pageable pageable) throws ValidException;
+	
+	
+	
 	/**
 	 * 根据时间查询
 	 * @param date

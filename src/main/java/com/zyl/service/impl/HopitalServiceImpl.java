@@ -98,4 +98,14 @@ public class HopitalServiceImpl implements HospitalService{
 		}
 		return hospital;
 	}
+
+	@Override
+	public Page<Hospital> queryAll(Pageable pageable) throws ValidException {
+		Page<Hospital> hpPage = hospitalDAO.findAll(pageable);
+		if(hpPage != null&&hpPage.getSize()!=0){
+			return hpPage;
+		}else{
+			throw new ValidException("hospital", "无数据");
+		}
+	}
 }
