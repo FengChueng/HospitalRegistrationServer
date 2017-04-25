@@ -117,12 +117,12 @@ public class DoctorController {
 
 	@RequestMapping(value = "/doctor/updateInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<DoctorBean> updateDoctorInfo(@RequestParam(value = "account", required = true) String account,
+	public ResponseEntity<Doctor> updateDoctorInfo(@RequestParam(value = "account", required = true) String account,
 			@RequestParam(value = "realName") String realName, @RequestParam(value = "sex") int sex,
 			@RequestParam(value = "realName") long birthDay, @RequestParam(value = "realName") String portraint,
 			@RequestParam(value = "realName") String mobilePhone, @RequestParam(value = "realName") String info,
 			@RequestParam(value = "realName") int level) {
-		ResponseEntity<DoctorBean> responseEntity = new ResponseEntity<>();
+		ResponseEntity<Doctor> responseEntity = new ResponseEntity<>();
 		try {
 			doctorService.modifyDoctorInfo(account, realName, sex, birthDay, portraint, mobilePhone, info, level);
 			responseEntity.setMsg("修改成功");
@@ -135,23 +135,13 @@ public class DoctorController {
 
 	@RequestMapping(value = "/doctor/queryDoctorByDoctorAccount", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<DoctorBean> queryByAccountId(
+	public ResponseEntity<Doctor> queryByAccountId(
 			@RequestParam(value = "account", required = true) String account) {
-		ResponseEntity<DoctorBean> responseEntity = new ResponseEntity<>();
+		ResponseEntity<Doctor> responseEntity = new ResponseEntity<>();
 		try {
 			Doctor doctor = doctorService.queryDoctorByDoctorAccount(account);
-			//List<DoctorSchedule> doctorSchedules = null;
-//			if (CollectionUtils.isEmpty(doctor.getDoctorSchedules())) {
-//				doctorSchedules = new ArrayList<>(doctor.getDoctorSchedules());
-//			}
-//			List<Appointment> appointments = null;
-//			if (CollectionUtils.isEmpty(doctor.getAppointments())) {
-//				appointments = new ArrayList<>(doctor.getAppointments());
-//			}
-			DoctorBean doctorBean = new DoctorBean(doctor.getDoctorAccount(), doctor.getRealName(), doctor.getAge(),
-					doctor.getSex(), doctor.getBirthDay(), doctor.getMobilePhone(), doctor.getPortraint(),
-					doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount());
-			responseEntity.setData(doctorBean);
+			doctor.setPassword(null);
+			responseEntity.setData(doctor);
 			responseEntity.setMsg("查询成功");
 		} catch (ValidException e) {
 			responseEntity.setStatus(Constant.FIAL);
@@ -162,9 +152,9 @@ public class DoctorController {
 
 	@RequestMapping(value = "/doctor/queryByDeptIdAndName", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<DoctorBean> queryByAccountId(@RequestParam(value = "deptId", required = true) String deptId,
+	public ResponseEntity<Doctor> queryByAccountId(@RequestParam(value = "doctor", required = true) String deptId,
 			@RequestParam(value = "doctorName", required = true) String doctorName) {
-		ResponseEntity<DoctorBean> responseEntity = new ResponseEntity<>();
+		ResponseEntity<Doctor> responseEntity = new ResponseEntity<>();
 		try {
 			Doctor doctor = doctorService.queryByDeptIdAndName(deptId, doctorName);
 //			List<DoctorSchedule> doctorSchedules = null;
@@ -175,10 +165,8 @@ public class DoctorController {
 //			if (CollectionUtils.isEmpty(doctor.getAppointments())) {
 //				appointments = new ArrayList<>(doctor.getAppointments());
 //			}
-			DoctorBean doctorBean = new DoctorBean(doctor.getDoctorAccount(), doctor.getRealName(), doctor.getAge(),
-					doctor.getSex(), doctor.getBirthDay(), doctor.getMobilePhone(), doctor.getPortraint(),
-					doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount());
-			responseEntity.setData(doctorBean);
+			doctor.setPassword(null);//屏蔽密码
+			responseEntity.setData(doctor);
 			responseEntity.setMsg("查询成功");
 		} catch (ValidException e) {
 			responseEntity.setStatus(Constant.FIAL);
