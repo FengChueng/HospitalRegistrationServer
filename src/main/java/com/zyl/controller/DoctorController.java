@@ -119,16 +119,10 @@ public class DoctorController {
 	@ResponseBody
 	public ResponseEntity<DoctorBean> updateDoctorInfo(@RequestParam(value = "account", required = true) String account,
 			@RequestParam(value = "realName", required = false) String realName, @RequestParam(value = "sex", required = false) Integer sex,
-			@RequestParam(value = "realName", required = false) Long birthDay, @RequestParam(value = "realName", required = false) String portraint,
-			@RequestParam(value = "realName", required = false) String mobilePhone, @RequestParam(value = "realName", required = false) String info,
-			@RequestParam(value = "realName", required = false) Integer level) {
+			@RequestParam(value = "birthDay", required = false) Long birthDay, @RequestParam(value = "realName", required = false) String portraint,
+			@RequestParam(value = "mobilePhone", required = false) String mobilePhone, @RequestParam(value = "realName", required = false) String info,
+			@RequestParam(value = "level", required = false) Integer level) {
 		ResponseEntity<DoctorBean> responseEntity = new ResponseEntity<>();
-	public ResponseEntity<Doctor> updateDoctorInfo(@RequestParam(value = "account", required = true) String account,
-			@RequestParam(value = "realName") String realName, @RequestParam(value = "sex") int sex,
-			@RequestParam(value = "realName") long birthDay, @RequestParam(value = "realName") String portraint,
-			@RequestParam(value = "realName") String mobilePhone, @RequestParam(value = "realName") String info,
-			@RequestParam(value = "realName") int level) {
-		ResponseEntity<Doctor> responseEntity = new ResponseEntity<>();
 		try {
 			doctorService.modifyDoctorInfo(account, realName, sex, birthDay, portraint, mobilePhone, info, level);
 			responseEntity.setMsg("修改成功");
