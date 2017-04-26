@@ -93,9 +93,9 @@ public class FileController {
 			file.transferTo(dest);
 			
 			if(role == Constant.DOCTOR){//医生
-				doctorService.modifyDoctorInfo(account, null, 0, 0, fileName, null, null, 0);
+				doctorService.modifyDoctorInfo(account, null, Integer.valueOf(0), Long.valueOf(0), fileName, null, null, 0);
 			}else{
-				patientService.modifyPatientInfo(account, null, 0, 0, fileName, null);
+				patientService.modifyPatientInfo(account, null, Integer.valueOf(0), Long.valueOf(0), fileName, null);
 			}
 			responseEntity.setStatus(Constant.SUCCESS);
 			responseEntity.setMsg("上传成功!");

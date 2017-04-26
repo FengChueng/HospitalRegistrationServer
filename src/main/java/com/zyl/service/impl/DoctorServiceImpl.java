@@ -68,8 +68,8 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public void modifyDoctorInfo(String doctorAccount, String realName, int sex, long birthDay, String portraint,
-			String mobilePhone, String info, int level) throws ValidException {
+	public void modifyDoctorInfo(String doctorAccount, String realName, Integer sex, Long birthDay, String portraint,
+			String mobilePhone, String info, Integer level) throws ValidException {
 		Doctor doctor = doctorDAO.findOne(doctorAccount);
 		if (doctor == null) {
 			throw new ValidException("patient", "账号未注册");

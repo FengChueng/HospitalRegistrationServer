@@ -145,18 +145,18 @@ public class PatientController {
 		return responseEntity;
 	}
 
-	@RequestMapping(value = "/patient/modifyPatientInfo", method = RequestMethod.POST)
+	@RequestMapping(value = "/patient/modifyPatientInfo", method = RequestMethod.GET)
 	@ResponseBody
 	@Transactional
 	public ResponseEntity<PatientBean> modifyPatientInfo(
 			@RequestParam(value = "account", required = true) String account,
-			@RequestParam(value = "oldPwd") String oldPwd,
-			@RequestParam(value = "newPwd") String newPwd, 
-			@RequestParam(value = "realName") String realName,
-			@RequestParam(value = "sex") int sex,
-			@RequestParam(value = "birthDay") long birthDay,
-			@RequestParam(value = "portraint") String portraint, 
-			@RequestParam(value = "mobilePhone") String mobilePhone) {
+			@RequestParam(value = "oldPwd", required = false) String oldPwd,
+			@RequestParam(value = "newPwd", required = false) String newPwd, 
+			@RequestParam(value = "realName", required = false) String realName,
+			@RequestParam(value = "sex", required = false) Integer sex,
+			@RequestParam(value = "birthDay", required = false) Long birthDay,
+			@RequestParam(value = "portraint", required = false) String portraint, 
+			@RequestParam(value = "mobilePhone", required = false) String mobilePhone) {
 		ResponseEntity<PatientBean> responseEntity = new ResponseEntity<>();
 		try {
 			patientService.modifyPatientInfo(account, realName, sex, birthDay, portraint, mobilePhone);

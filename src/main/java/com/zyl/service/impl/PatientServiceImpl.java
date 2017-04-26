@@ -81,7 +81,7 @@ public class PatientServiceImpl implements PatientService{
 
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public void modifyPatientInfo(String patientId,String realName,int sex,long birthDay,String portraint,String mobilePhone) throws ValidException {
+	public void modifyPatientInfo(String patientId,String realName,Integer sex,Long birthDay,String portraint,String mobilePhone) throws ValidException {
 		Patient patient = patientDAO.findOne(patientId);
 		if(patient == null){
 			throw new ValidException("patient", "账号未注册");
@@ -90,17 +90,18 @@ public class PatientServiceImpl implements PatientService{
 			patient.setRealName(realName);
 		}
 		
-		if(birthDay!=0){
+		if(birthDay!=null){
 			patient.setBirthDay(birthDay);
 			patient.setAge(DateUtil.getAge(birthDay));
 		}
-		if(sex==Constant.SEX_MALE||sex==Constant.SEX_FEMALE){
+		if(sex != null){
 			patient.setSex(sex);
 		}
 		
 		if(!StringUtils.isEmpty(mobilePhone)){
 			patient.setMobilePhone(mobilePhone);
 		}
+		
 		if(!StringUtils.isEmpty(portraint)){
 			patient.setPortraint(portraint);
 		}

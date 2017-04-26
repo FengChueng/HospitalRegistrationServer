@@ -15,7 +15,7 @@ public interface PatientService {
 	
 	void resetPatientPwd(String patientId,String newPwd) throws ValidException;
 
-	void modifyPatientInfo(String patientId, String realName, int sex, long birthDay, String portraint,
+	void modifyPatientInfo(String patientId, String realName, Integer sex, Long birthDay, String portraint,
 			String mobilePhone) throws ValidException;
 
 }	

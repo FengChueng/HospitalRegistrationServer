@@ -25,8 +25,8 @@ public interface DoctorService {
 	 * @param level		默认参数0
 	 * @throws ValidException
 	 */
-	void modifyDoctorInfo(String doctorAccount, String realName, int sex, long birthDay, String portraint,
-			String mobilePhone, String info, int level) throws ValidException;
+	void modifyDoctorInfo(String doctorAccount, String realName, Integer sex, Long birthDay, String portraint,
+			String mobilePhone, String info, Integer level) throws ValidException;
 	
 	
 	

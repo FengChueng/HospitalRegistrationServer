@@ -111,7 +111,7 @@ public class InitServiceImpl implements InitService {
 					doctor.setRealName("doctor" + j);
 					doctor.setOrderCount(100 * j + 1);
 					doctor.setSex(j % 2 == 0 ? Constant.SEX_MALE : Constant.SEX_FEMALE);
-					doctor.setPortraint(path + "code.png");
+					doctor.setPortraint(path + "voicechange_dashu.png");
 					doctor.setDoctorSchedules(doctorSchedules);
 					// 添加
 					doctors.add(doctor);
@@ -122,11 +122,12 @@ public class InitServiceImpl implements InitService {
 			}
 
 			Hospital hospital = new Hospital();
-			hospital.setHospitalName("绵阳精神病院");
+			hospital.setHospitalName("绵阳第十中心医院");
 			hospital.setLatitude(30.123f);
 			hospital.setLongitude(10.123f);
-			hospital.setLocation("四川成都");
-			hospital.setInfo("hello word");
+			hospital.setLocation("四川绵阳");
+			hospital.setInfo("济世救人");
+			hospital.setImg("cd120_logo");
 			hospital.setLevel(Constant.HOSPITAL_LEVEL_3_A);
 			long createDate = DateUtil.StrToDate("2010-10-20 00:00:00").getTime();
 			hospital.setCreateDate(createDate);
@@ -152,7 +153,7 @@ public class InitServiceImpl implements InitService {
 		String mobilePhone = "18380586504";
 		Date birthDay = DateUtil.parseStrToDate("1995-09-27");
 		String realName = "张应龙";
-		String portraint = path + "code.png";
+		String portraint = path + "voicechange_gaoguai.png";
 		try {
 			patientService.modifyPatientInfo(mobilePhone, realName, Constant.SEX_MALE, birthDay.getTime(), portraint, mobilePhone);
 		} catch (ValidException e) {
