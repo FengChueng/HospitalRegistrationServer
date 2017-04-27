@@ -64,7 +64,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 		appointment.setPatientId(patientId);
 		appointment.setLocation(location);
 		appointment.setPrice(price);
-		appointment.setClinicDate(clinicDate);
+		appointment.setClinicDate(doctorSchedule.getScheduleDate());
 		appointment.setAppointDate(appointDate);
 		Set<Appointment> appointments = patient.getAppointments();
 		if(appointments == null){
