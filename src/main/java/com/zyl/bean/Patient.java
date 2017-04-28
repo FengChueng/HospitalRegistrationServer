@@ -30,7 +30,7 @@ public class Patient implements Serializable{
 	private String mobilePhone;// 联系电话
 	private String portraint;//用户头像
 
-	private Set<Appointment> appointments;
+	private Set<AppointmentBean> appointments;
 	
 	public Patient() {
 	}
@@ -106,11 +106,11 @@ public class Patient implements Serializable{
 		this.portraint = portraint;
 	}
 
-	public Set<Appointment> getAppointments() {
+	public Set<AppointmentBean> getAppointments() {
 		return appointments;
 	}
 
-	public void setAppointments(Set<Appointment> appointments) {
+	public void setAppointments(Set<AppointmentBean> appointments) {
 		this.appointments = appointments;
 	}
 	

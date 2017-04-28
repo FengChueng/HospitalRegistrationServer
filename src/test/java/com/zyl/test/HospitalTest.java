@@ -72,6 +72,8 @@ public class HospitalTest extends BaseTest{
 						doctorSchedule.setScheduleDate(scheduleDate);
 						doctorSchedule.setStatus(Constant.DOCTOR_SCHEDULE_POSSIBLE);
 						doctorSchedule.setMaxAppointmentCount(30);
+						doctorSchedule.setPrice(50);
+						doctorSchedule.setLocation("门诊大楼三楼206诊室");
 						//添加
 						doctorSchedules.add(doctorSchedule);
 					}	

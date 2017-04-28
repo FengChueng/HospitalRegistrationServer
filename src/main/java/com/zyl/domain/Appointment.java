@@ -33,7 +33,10 @@ public class Appointment implements Serializable{
 	private int status;//0未处理,1已处理,2超时未处理,3已取消预约
 	@Column(name="loc",nullable=true)
 	private String location;
-	
+	@Column(name="hospital_id",nullable=true)
+	private String hospitalId;
+	@Column(name="dept_id",nullable=true)
+	private String deptId;
 	@Column(name="patient_id",nullable=true)
 	private String patientId;
 	@Column(name="doctor_id",nullable=true)
@@ -44,6 +47,19 @@ public class Appointment implements Serializable{
 	
 	public Appointment() {
 		this.appointId = UUID.randomUUID().toString();
+	}
+	
+	public String getHospitalId() {
+		return hospitalId;
+	}
+	public void setHospitalId(String hospitalId) {
+		this.hospitalId = hospitalId;
+	}
+	public String getDeptId() {
+		return deptId;
+	}
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
 	}
 	public String getAppointId() {
 		return appointId;
@@ -101,4 +117,5 @@ public class Appointment implements Serializable{
 	public void setDoctorId(String doctorId) {
 		this.doctorId = doctorId;
 	}
+	
 }

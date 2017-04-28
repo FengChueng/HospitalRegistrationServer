@@ -24,7 +24,7 @@ public class Doctor implements Serializable{
 	private int orderCount;//被预约次数
 
 	private Set<DoctorSchedule> doctorSchedules;
-	private Set<Appointment> appointments;
+	private Set<AppointmentBean> appointments;
 
 	public Doctor() {
 	}
@@ -125,11 +125,11 @@ public class Doctor implements Serializable{
 		this.doctorSchedules = doctorSchedules;
 	}
 
-	public Set<Appointment> getAppointments() {
+	public Set<AppointmentBean> getAppointments() {
 		return appointments;
 	}
 
-	public void setAppointments(Set<Appointment> appointments) {
+	public void setAppointments(Set<AppointmentBean> appointments) {
 		this.appointments = appointments;
 	}
 }

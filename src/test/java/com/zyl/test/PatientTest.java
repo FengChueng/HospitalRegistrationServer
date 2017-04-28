@@ -56,16 +56,15 @@ public class PatientTest extends BaseTest {
 	}
 	
 
-	@Test @Ignore// 预约
-	public void addAppointment() {
-		String patientId = "18380586504";
-		String doctorId = "1000";
-		String doctorScheduleId = "";
-		try {
-			appointmentService.makeAppointment(patientId, doctorId, doctorScheduleId, 100, new Date().getTime(), new Date().getTime(),
-					"1231231");
-		} catch (ValidException e) {
-			e.printStackTrace();
-		}
-	}
+//	@Test @Ignore// 预约
+//	public void addAppointment() {
+//		String patientId = "18380586504";
+//		String doctorId = "1000";
+//		String doctorScheduleId = "";
+//		try {
+//			appointmentService.makeAppointment(patientId, doctorId, doctorScheduleId ,new Date().getTime());
+//		} catch (ValidException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }

@@ -3,7 +3,7 @@ package com.zyl.bean;
 import java.io.Serializable;
 import java.util.UUID;
 
-public class Appointment implements Serializable{
+public class AppointmentBean implements Serializable{
 	/**
 	 * 
 	 */
@@ -13,14 +13,27 @@ public class Appointment implements Serializable{
 	private long clinicDate;//就诊时间
 	private long appointDate;//预约时间 提前1-3天开始预约
 	private int status;//0未处理,1已处理,2超时未处理,3已取消预约
-	private String location;
-	
+	private String location;	
+	private String hospitalId;
+	private String deptId;
 	private String patientId;
 	private String doctorId;
+	public String getHospitalId() {
+		return hospitalId;
+	}
+	public void setHospitalId(String hospitalId) {
+		this.hospitalId = hospitalId;
+	}
+	public String getDeptId() {
+		return deptId;
+	}
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
+	}
 	
 	private String doctorAdvice;//医嘱
 	
-	public Appointment() {
+	public AppointmentBean() {
 		this.appointId = UUID.randomUUID().toString();
 	}
 	public String getAppointId() {

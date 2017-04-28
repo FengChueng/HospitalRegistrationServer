@@ -12,14 +12,19 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import com.zyl.bean.AppointmentDetail;
 import com.zyl.domain.Appointment;
+import com.zyl.domain.Department;
 import com.zyl.domain.Doctor;
 import com.zyl.domain.DoctorSchedule;
+import com.zyl.domain.Hospital;
 import com.zyl.domain.Patient;
 import com.zyl.exception.ValidException;
 import com.zyl.jpa.AppointmentDAO;
+import com.zyl.jpa.DepartmentDAO;
 import com.zyl.jpa.DoctorDAO;
 import com.zyl.jpa.DoctorScheduleDAO;
+import com.zyl.jpa.HospitalDAO;
 import com.zyl.jpa.PatientDAO;
 import com.zyl.service.AppointmentService;
 import com.zyl.utils.Constant;
@@ -39,10 +44,59 @@ public class AppointmentServiceImpl implements AppointmentService{
 	@Autowired
 	private DoctorScheduleDAO doctorScheduleDAO;
 	
+	@Autowired
+	private HospitalDAO hospitalDAO;
+	
+	@Autowired
+	private DepartmentDAO departmentDAO;
+	
+	
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public void makeAppointment(String patientId, String doctorId,String doctorScheduleId ,float price, long clinicDate, long appointDate,
-			String location) throws ValidException {
+	public AppointmentDetail appointmentInfo(String hospitalId,String deptId,String patientId, String doctorId, String doctorScheduleId) throws ValidException{
+		AppointmentDetail appointmentDetail = new AppointmentDetail();
+//		Appointment appointment = appointmentDAO.findOne(appointId);
+//		if(appointment == null){
+//			throw new ValidException("appointment", "该预约不存在");
+//		}
+//		Hospital hospital = hospitalDAO.findOne(appointment.getHospitalId());
+//		if(hospital == null){
+//			throw new ValidException("appointment", "预约不存在");
+//		}
+//		
+//		Department department = departmentDAO.findOne(appointment.getDeptId());
+//		if(department == null){
+//			throw new ValidException("appointment", "预约不存在");
+//		}
+//		
+//		Doctor doctor = doctorDAO.findOne(appointment.getDoctorId());
+//		if(doctor == null){
+//			throw new ValidException("appointment", "预约不存在");
+//		}
+//		
+//		Patient patient = patientDAO.findOne(appointment.getAppointId());
+//		if(patient == null){
+//			throw new ValidException("appointment", "预约不存在");
+//		}
+//		appointmentDetail.setAppointId(appointId);
+//		appointmentDetail.setPrice(appointmentDetail.getPrice());
+//		appointmentDetail.setClinicDate(appointment.getClinicDate());
+//		appointmentDetail.setAppointDate(appointment.getAppointDate());
+//		appointmentDetail.setStatus(appointment.getStatus());
+//		appointmentDetail.setLocation(appointment.getLocation());
+//		appointmentDetail.setHospitalLocation(hospital.getLocation());
+//		appointmentDetail.setHospitalName(hospital.getHospitalName());
+//		appointmentDetail.setDeptName(department.getDeptName());
+//		appointmentDetail.setDoctorName(doctor.getRealName());
+//		appointmentDetail.setPatientName(patient.getRealName());
+//		appointmentDetail.setDoctorAdvice(appointment.getDoctorAdvice());
+		return appointmentDetail;
+	}
+	
+	
+	@Override
+	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
+	public void makeAppointment(String hospitalId,String deptId,String patientId, String doctorId, String doctorScheduleId) throws ValidException {
 		Patient patient = patientDAO.findOne(patientId);
 		if(patient == null){
 			throw new ValidException("patient", "用户不存在");
@@ -59,13 +113,16 @@ public class AppointmentServiceImpl implements AppointmentService{
 		}else{
 			throw new ValidException("appointment", "该医生预约已满");
 		}
+		
 		Appointment appointment = new Appointment();
+		appointment.setHospitalId(hospitalId);
+		appointment.setDeptId(deptId);
 		appointment.setDoctorId(doctorId);
 		appointment.setPatientId(patientId);
-		appointment.setLocation(location);
-		appointment.setPrice(price);
+		appointment.setLocation(doctorSchedule.getLocation());
+		appointment.setPrice(doctorSchedule.getPrice());
 		appointment.setClinicDate(doctorSchedule.getScheduleDate());
-		appointment.setAppointDate(appointDate);
+		appointment.setAppointDate(System.currentTimeMillis());
 		Set<Appointment> appointments = patient.getAppointments();
 		if(appointments == null){
 			appointments = new HashSet<>();
@@ -75,6 +132,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 		doctor.setAppointments(appointments);
 		doctorDAO.saveAndFlush(doctor);
 		patientDAO.saveAndFlush(patient);
+		
 	}
 	
 	
@@ -109,19 +167,54 @@ public class AppointmentServiceImpl implements AppointmentService{
 		if(appointment == null){
 			throw new ValidException("appointment", "该预约不存在");
 		}
+		if(System.currentTimeMillis()-appointment.getClinicDate()>=24*60*60*1000){
+			throw new ValidException("appointment", "就诊当天不允许退号");
+		}
 		appointment.setStatus(Constant.APPOINT_CANCEL);//取消		
 		appointmentDAO.saveAndFlush(appointment);
 	}
 	
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
-	public Appointment queryByAppointId(String appointId) throws ValidException{
+	public AppointmentDetail queryByAppointId(String appointId) throws ValidException{
+		AppointmentDetail appointmentDetail = new AppointmentDetail();
 		Appointment appointment = appointmentDAO.findOne(appointId);
 		if(appointment == null){
 			throw new ValidException("appointment", "该预约不存在");
 		}
-		return appointment;
-	}
+		Hospital hospital = hospitalDAO.findOne(appointment.getHospitalId());
+		if(hospital == null){
+			throw new ValidException("appointment", "预约不存在");
+		}
+		
+		Department department = departmentDAO.findOne(appointment.getDeptId());
+		if(department == null){
+			throw new ValidException("appointment", "预约不存在");
+		}
+		
+		Doctor doctor = doctorDAO.findOne(appointment.getDoctorId());
+		if(doctor == null){
+			throw new ValidException("appointment", "预约不存在");
+		}
+		
+		Patient patient = patientDAO.findOne(appointment.getAppointId());
+		if(patient == null){
+			throw new ValidException("appointment", "预约不存在");
+		}
+		appointmentDetail.setAppointId(appointId);
+		appointmentDetail.setPrice(appointmentDetail.getPrice());
+		appointmentDetail.setClinicDate(appointment.getClinicDate());
+		appointmentDetail.setAppointDate(appointment.getAppointDate());
+		appointmentDetail.setStatus(appointment.getStatus());
+		appointmentDetail.setLocation(appointment.getLocation());
+		appointmentDetail.setHospitalLocation(hospital.getLocation());
+		appointmentDetail.setHospitalName(hospital.getHospitalName());
+		appointmentDetail.setDeptName(department.getDeptName());
+		appointmentDetail.setDoctorName(doctor.getRealName());
+		appointmentDetail.setPatientName(patient.getRealName());
+		appointmentDetail.setDoctorAdvice(appointment.getDoctorAdvice());
+		return appointmentDetail;
+	}	
 	
 	@Override
 	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)

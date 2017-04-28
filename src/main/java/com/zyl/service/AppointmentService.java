@@ -2,24 +2,21 @@ package com.zyl.service;
 
 import java.util.List;
 
+import com.zyl.bean.AppointmentDetail;
 import com.zyl.domain.Appointment;
 import com.zyl.exception.ValidException;
 
 public interface AppointmentService {
-	
+
 	/**
-	 * 病人预约
+	 * 预约
 	 * @param patientId
 	 * @param doctorId
 	 * @param doctorScheduleId
-	 * @param price
-	 * @param clinicDate
 	 * @param appointDate
-	 * @param location
-	 * @throws ValidException
+	 * @throws ValidException 
 	 */
-	void makeAppointment(String patientId, String doctorId, String doctorScheduleId, float price, long clinicDate,
-			long appointDate, String location) throws ValidException;
+	void makeAppointment(String hospitalId,String deptId,String patientId, String doctorId, String doctorScheduleId) throws ValidException;
 	
 	/**
 	 * 完成预约
@@ -49,7 +46,7 @@ public interface AppointmentService {
 	 * @return
 	 * @throws ValidException
 	 */
-	Appointment queryByAppointId(String appointId) throws ValidException;
+	AppointmentDetail queryByAppointId(String appointId) throws ValidException;
 	
 	/**
 	 * 查询病人的所有预约
@@ -84,6 +81,19 @@ public interface AppointmentService {
 	 * @throws ValidException
 	 */
 	List<Appointment> queryByDoctorIdAndStatus(String doctorId,int status) throws ValidException;
+
+	/**
+	 * 预生成预约
+	 * @param hospitalId
+	 * @param deptId
+	 * @param patientId
+	 * @param doctorId
+	 * @param doctorScheduleId
+	 * @return
+	 * @throws ValidException
+	 */
+	AppointmentDetail appointmentInfo(String hospitalId, String deptId, String patientId, String doctorId,
+			String doctorScheduleId) throws ValidException;
 	
 
 }	

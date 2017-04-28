@@ -38,6 +38,12 @@ public class DoctorSchedule implements Serializable{
 	@Column(name="schedule_date",nullable=false)
 	private long scheduleDate;//时间
 	
+	@Column(name="price",nullable=false)
+	private int price;
+	
+	@Column(name="location",nullable=false)
+	private String location;
+	
 	public DoctorSchedule() {
 		doctorScheduleId = UUID.randomUUID().toString();
 	}
@@ -66,5 +72,17 @@ public class DoctorSchedule implements Serializable{
 	}
 	public void setMaxAppointmentCount(int maxAppointmentCount) {
 		this.maxAppointmentCount = maxAppointmentCount;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
 	}
 }

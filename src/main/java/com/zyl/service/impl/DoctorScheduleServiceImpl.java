@@ -18,6 +18,7 @@ import com.zyl.exception.ValidException;
 import com.zyl.jpa.DoctorDAO;
 import com.zyl.jpa.DoctorScheduleDAO;
 import com.zyl.service.DoctorScheduleService;
+import com.zyl.utils.Constant;
 @Repository
 public class DoctorScheduleServiceImpl implements DoctorScheduleService{
 
@@ -43,6 +44,13 @@ public class DoctorScheduleServiceImpl implements DoctorScheduleService{
 		doctorSchedule.setScheduleDate(scheduleDate);
 		doctorSchedule.setStatus(status);
 		doctorSchedule.setMaxAppointmentCount(maxAppointmentCount);
+		
+		if(doctor.getLevel()==Constant.DOCTOR_NORMAL){
+			doctorSchedule.setPrice(50);
+		}else{
+			doctorSchedule.setPrice(100);
+		}
+		
 		doctorSchedules.add(doctorSchedule);
 		doctorDAO.saveAndFlush(doctor);
 	}

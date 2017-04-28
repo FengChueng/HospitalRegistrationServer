@@ -80,6 +80,23 @@ public class InitServiceImpl implements InitService {
 					Date date = DateUtil.StrToDate(birthday);
 					long birthDay = date == null ? 0 : date.getTime();
 
+					
+					// 初始化
+					Doctor doctor = new Doctor();
+					doctor.setDoctorAccount("100000000" + i + "" + j);
+					doctor.setPassword("123456");
+					doctor.setAge(age);
+					doctor.setBirthDay(birthDay);
+					doctor.setLevel(j % 2 == 0 ? Constant.DOCTOR_NORMAL : Constant.DOCTOR_PROFESSOR);
+					doctor.setMobilePhone("100000000" + i + "" + j);
+					doctor.setInfo("doctor" + j + "简介");
+					doctor.setRealName("doctor" + j);
+					doctor.setOrderCount(100 * j + 1);
+					doctor.setSex(j % 2 == 0 ? Constant.SEX_MALE : Constant.SEX_FEMALE);
+					doctor.setPortraint(path + "voicechange_dashu.png");
+					
+					int price = doctor.getLevel()==Constant.DOCTOR_NORMAL?50:100;
+					
 					Set<DoctorSchedule> doctorSchedules = new HashSet<>();
 					for (int k = 1; k <= 3; k++) {
 						Calendar calendar = Calendar.getInstance();
@@ -96,22 +113,12 @@ public class InitServiceImpl implements InitService {
 						doctorSchedule.setScheduleDate(scheduleDate);
 						doctorSchedule.setStatus(Constant.DOCTOR_SCHEDULE_POSSIBLE);
 						doctorSchedule.setMaxAppointmentCount(30);
+						doctorSchedule.setPrice(price);
+						doctorSchedule.setLocation("门诊大楼三楼206诊室");
 						// 添加
 						doctorSchedules.add(doctorSchedule);
 					}
-					// 初始化
-					Doctor doctor = new Doctor();
-					doctor.setDoctorAccount("100000000" + i + "" + j);
-					doctor.setPassword("123456");
-					doctor.setAge(age);
-					doctor.setBirthDay(birthDay);
-					doctor.setLevel(j % 2 == 0 ? Constant.DOCTOR_NORMAL : Constant.DOCTOR_PROFESSOR);
-					doctor.setMobilePhone("100000000" + i + "" + j);
-					doctor.setInfo("doctor" + j + "简介");
-					doctor.setRealName("doctor" + j);
-					doctor.setOrderCount(100 * j + 1);
-					doctor.setSex(j % 2 == 0 ? Constant.SEX_MALE : Constant.SEX_FEMALE);
-					doctor.setPortraint(path + "voicechange_dashu.png");
+					
 					doctor.setDoctorSchedules(doctorSchedules);
 					// 添加
 					doctors.add(doctor);
@@ -161,32 +168,31 @@ public class InitServiceImpl implements InitService {
 		}
 	}
 	
-	public void makeAppointment() {
-		String patientId = "18380586504";
-		try {
-			
-			String doctorId = "";
-			String scheduleId = "";
-			long clicDate = 0;
-			Set<Department> departments = hospitalService.queryByHospitalName("绵阳精神病院").getDepartments();
-			for (Department department : departments) {
-				Set<Doctor> doctors = department.getDoctors();
-				for (Doctor doctor : doctors) {
-					doctorId = doctor.getDoctorAccount();
-					Set<DoctorSchedule> doctorSchedules = doctor.getDoctorSchedules();
-					for (DoctorSchedule doctorSchedule : doctorSchedules) {
-						scheduleId = doctorSchedule.getDoctorScheduleId();
-						clicDate = doctorSchedule.getScheduleDate();
-						break;
-					}
-					break;
-				}
-				break;
-			}
-			appointmentService.makeAppointment(patientId, doctorId, scheduleId, 100, clicDate, new Date().getTime(),
-					"1231231");
-		} catch (ValidException e) {
-			e.printStackTrace();
-		}
-	}
+//	public void makeAppointment() {
+//		String patientId = "18380586504";
+//		try {
+//			
+//			String doctorId = "";
+//			String scheduleId = "";
+//			long clicDate = 0;
+//			Set<Department> departments = hospitalService.queryByHospitalName("绵阳精神病院").getDepartments();
+//			for (Department department : departments) {
+//				Set<Doctor> doctors = department.getDoctors();
+//				for (Doctor doctor : doctors) {
+//					doctorId = doctor.getDoctorAccount();
+//					Set<DoctorSchedule> doctorSchedules = doctor.getDoctorSchedules();
+//					for (DoctorSchedule doctorSchedule : doctorSchedules) {
+//						scheduleId = doctorSchedule.getDoctorScheduleId();
+//						clicDate = doctorSchedule.getScheduleDate();
+//						break;
+//					}
+//					break;
+//				}
+//				break;
+//			}
+//			appointmentService.makeAppointment(patientId, doctorId, scheduleId, new Date().getTime());
+//		} catch (ValidException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zyl.bean.AppointmentDetail;
 import com.zyl.bean.ResponseEntity;
 import com.zyl.domain.Appointment;
 import com.zyl.exception.ValidException;
@@ -26,19 +27,56 @@ public class AppointmentController {
 	}
 	
 	
+	/**
+	 * 完成预约
+	 * @param appointId
+	 * @return
+	 */
+	@RequestMapping(value = "/appointment/completeAppointment", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Appointment> completeAppointment(
+			@RequestParam(value = "appointId", required = true) String appointId,
+			@RequestParam(value = "doctorAdvice", required = true) String doctorAdvice) {
+		ResponseEntity<Appointment> responseEntity = new ResponseEntity<>();
+		try {
+			appointmentService.completeAppointment(appointId, doctorAdvice);
+			responseEntity.setData(null);
+			responseEntity.setMsg("就诊结束");
+		} catch (ValidException e) {
+			responseEntity.setStatus(Constant.FIAL);
+			responseEntity.setMsg(e.getMessage());
+		}
+		return responseEntity;
+	}
+	
+	
+	@RequestMapping(value = "/appointment/cancelAppointment", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Appointment> cancelAppointment(
+			@RequestParam(value = "appointId", required = true) String appointId) {
+		ResponseEntity<Appointment> responseEntity = new ResponseEntity<>();
+		try {
+			appointmentService.cancelAppointment(appointId);
+			responseEntity.setData(null);
+			responseEntity.setMsg("取消成功");
+		} catch (ValidException e) {
+			responseEntity.setStatus(Constant.FIAL);
+			responseEntity.setMsg(e.getMessage());
+		}
+		return responseEntity;
+	}
+	
 	@RequestMapping(value = "/appointment/makeappointment", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<Appointment> makeAppointment(
+			@RequestParam(value = "hospitalId", required = true) String hospitalId,
+			@RequestParam(value = "deptId", required = true) String deptId,
 			@RequestParam(value = "patientId", required = true) String patientId,
 			@RequestParam(value = "doctorId", required = true) String doctorId,
-			@RequestParam(value = "doctorScheduleId", required = true) String doctorScheduleId,
-			@RequestParam(value = "price", required = true) float price,
-			@RequestParam(value = "clinicDate", required = true) long clinicDate,
-			@RequestParam(value = "appointDate", required = true) long appointDate,
-			@RequestParam(value = "location") String location) {
+			@RequestParam(value = "doctorScheduleId", required = true) String doctorScheduleId) {
 		ResponseEntity<Appointment> responseEntity = new ResponseEntity<>();
 		try {
-			appointmentService.makeAppointment(patientId, doctorId, doctorScheduleId, price, clinicDate, appointDate, location);
+			appointmentService.makeAppointment(hospitalId,deptId,patientId, doctorId, doctorScheduleId);
 			responseEntity.setData(null);
 			responseEntity.setMsg("预约成功");
 		} catch (ValidException e) {
@@ -49,19 +87,17 @@ public class AppointmentController {
 	}
 
 	/**
-	 * doctorId查询预约
-	 * @param hospitalId
-	 * @param page
-	 * @param size
+	 * appointId查询预约
+	 * @param appointId
 	 * @return
 	 */
 	@RequestMapping(value = "/appointment/queryByAppointId", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<Appointment> queryByAppointId(
+	public ResponseEntity<AppointmentDetail> queryByAppointId(
 			@RequestParam(value = "appointId", required = true) String appointId) {
-		ResponseEntity<Appointment> responseEntity = new ResponseEntity<>();
+		ResponseEntity<AppointmentDetail> responseEntity = new ResponseEntity<>();
 		try {
-			Appointment appointment = appointmentService.queryByAppointId(appointId);
+			AppointmentDetail appointment = appointmentService.queryByAppointId(appointId);
 			responseEntity.setData(appointment);
 			responseEntity.setMsg("查询成功");
 		} catch (ValidException e) {
