@@ -40,6 +40,8 @@ public interface AppointmentService {
 	 */
 	void startAppointment(String appointId) throws ValidException;
 	
+	void timeOutAppointment(String appointId) throws ValidException;
+	
 	/**
 	 * 通过appointId查询预约
 	 * @param appointId

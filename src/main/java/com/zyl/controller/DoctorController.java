@@ -44,9 +44,9 @@ public class DoctorController {
 	 */
 	@RequestMapping(value = "/doctor/login", method = RequestMethod.POST)
 	@ResponseBody
-	public ResponseEntity<DoctorBean> doctorLogin(@RequestParam(value = "account", required = true) String account,
+	public ResponseEntity<Doctor> doctorLogin(@RequestParam(value = "account", required = true) String account,
 			@RequestParam(value = "pwd", required = true) String pwd) {
-		ResponseEntity<DoctorBean> responseEntity = new ResponseEntity<>();
+		ResponseEntity<Doctor> responseEntity = new ResponseEntity<>();
 		try {
 			Doctor doctor = doctorService.login(account, pwd);
 			/*List<DoctorSchedule> doctorSchedules = null;
@@ -57,10 +57,10 @@ public class DoctorController {
 			if (CollectionUtils.isEmpty(doctor.getAppointments())) {
 				appointments = new ArrayList<>(doctor.getAppointments());
 			}*/
-			DoctorBean doctorBean = new DoctorBean(doctor.getDoctorAccount(), doctor.getRealName(), doctor.getAge(),
-					doctor.getSex(), doctor.getBirthDay(), doctor.getMobilePhone(), doctor.getPortraint(),
-					doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount());
-			responseEntity.setData(doctorBean);
+//			DoctorBean doctorBean = new DoctorBean(doctor.getDoctorAccount(), doctor.getRealName(), doctor.getAge(),
+//					doctor.getSex(), doctor.getBirthDay(), doctor.getMobilePhone(), doctor.getPortraint(),
+//					doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount());
+			responseEntity.setData(doctor);
 			responseEntity.setMsg("登录成功");
 		} catch (ValidException e) {
 			responseEntity.setStatus(Constant.FIAL);
@@ -177,28 +177,12 @@ public class DoctorController {
 
 	@RequestMapping(value = "/doctor/queryDoctorsByDeptId", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<DoctorBean>> queryByDeptId(
+	public ResponseEntity<List<Doctor>> queryByDeptId(
 			@RequestParam(value = "deptId", required = true) String deptId) {
-		ResponseEntity<List<DoctorBean>> responseEntity = new ResponseEntity<>();
-		List<DoctorBean> doctorBeans = new ArrayList<>();
+		ResponseEntity<List<Doctor>> responseEntity = new ResponseEntity<>();
 		try {
 			List<Doctor> doctors = doctorService.queryDoctorsByDeptId(deptId);
-			for (Doctor doctor : doctors) {
-				//List<DoctorSchedule> doctorSchedules = null;
-//				if (CollectionUtils.isEmpty(doctor.getDoctorSchedules())) {
-//					doctorSchedules = new ArrayList<>(doctor.getDoctorSchedules());
-//				}
-//				List<Appointment> appointments = null;
-//				if (CollectionUtils.isEmpty(doctor.getAppointments())) {
-//					appointments = new ArrayList<>(doctor.getAppointments());
-//				}
-				DoctorBean doctorBean = new DoctorBean(doctor.getDoctorAccount(), doctor.getRealName(), doctor.getAge(),
-						doctor.getSex(), doctor.getBirthDay(), doctor.getMobilePhone(), doctor.getPortraint(),
-						doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount());
-				doctorBeans.add(doctorBean);
-			}
-
-			responseEntity.setData(doctorBeans);
+			responseEntity.setData(doctors);
 			responseEntity.setMsg("查询成功");
 
 		} catch (ValidException e) {
@@ -210,13 +194,13 @@ public class DoctorController {
 
 	@RequestMapping(value = "/doctor/queryByNameLike", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<DoctorBean>> queryByNameLike(
+	public ResponseEntity<List<Doctor>> queryByNameLike(
 			@RequestParam(value = "doctorName", required = true) String doctorName) {
-		ResponseEntity<List<DoctorBean>> responseEntity = new ResponseEntity<>();
-		List<DoctorBean> doctorBeans = new ArrayList<>();
+		ResponseEntity<List<Doctor>> responseEntity = new ResponseEntity<>();
+//		List<DoctorBean> doctorBeans = new ArrayList<>();
 		try {
 			List<Doctor> doctors = doctorService.queryDoctorLikeName(doctorName);
-			for (Doctor doctor : doctors) {
+//			for (Doctor doctor : doctors) {
 //				List<DoctorSchedule> doctorSchedules = null;
 //				if (CollectionUtils.isEmpty(doctor.getDoctorSchedules())) {
 //					doctorSchedules = new ArrayList<>(doctor.getDoctorSchedules());
@@ -225,12 +209,12 @@ public class DoctorController {
 //				if (CollectionUtils.isEmpty(doctor.getAppointments())) {
 //					appointments = new ArrayList<>(doctor.getAppointments());
 //				}
-				DoctorBean doctorBean = new DoctorBean(doctor.getDoctorAccount(), doctor.getRealName(), doctor.getAge(),
-						doctor.getSex(), doctor.getBirthDay(), doctor.getMobilePhone(), doctor.getPortraint(),
-						doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount());
-				doctorBeans.add(doctorBean);
-			}
-			responseEntity.setData(doctorBeans);
+//				DoctorBean doctorBean = new DoctorBean(doctor.getDoctorAccount(), doctor.getRealName(), doctor.getAge(),
+//						doctor.getSex(), doctor.getBirthDay(), doctor.getMobilePhone(), doctor.getPortraint(),
+//						doctor.getInfo(), doctor.getLevel(), doctor.getOrderCount());
+//				doctorBeans.add(doctorBean);
+//			}
+			responseEntity.setData(doctors);
 			responseEntity.setMsg("查询成功");
 		} catch (ValidException e) {
 			responseEntity.setStatus(Constant.FIAL);

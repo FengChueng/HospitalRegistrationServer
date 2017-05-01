@@ -26,6 +26,38 @@ public class AppointmentController {
 		return "appointment";
 	}
 	
+	@RequestMapping(value = "/appointment/timeOutAppointment", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Appointment> timeOutAppointment(
+			@RequestParam(value = "appointId", required = true) String appointId){
+		ResponseEntity<Appointment> responseEntity = new ResponseEntity<>();
+		try {
+			appointmentService.timeOutAppointment(appointId);
+			responseEntity.setData(null);
+			responseEntity.setMsg("超时未就诊");
+		} catch (ValidException e) {
+			responseEntity.setStatus(Constant.FIAL);
+			responseEntity.setMsg(e.getMessage());
+		}
+		return responseEntity;
+	}
+	
+	
+	@RequestMapping(value = "/appointment/startAppointment", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Appointment> startAppointment(
+			@RequestParam(value = "appointId", required = true) String appointId) {
+		ResponseEntity<Appointment> responseEntity = new ResponseEntity<>();
+		try {
+			appointmentService.startAppointment(appointId);
+			responseEntity.setData(null);
+			responseEntity.setMsg("就诊开始");
+		} catch (ValidException e) {
+			responseEntity.setStatus(Constant.FIAL);
+			responseEntity.setMsg(e.getMessage());
+		}
+		return responseEntity;
+	}
 	
 	/**
 	 * 完成预约
@@ -85,6 +117,28 @@ public class AppointmentController {
 		}
 		return responseEntity;
 	}
+	
+	
+	@RequestMapping(value = "/appointment/getAppointmentDetail", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<AppointmentDetail> getAppointmentDetail(
+			@RequestParam(value = "hospitalId", required = true) String hospitalId,
+			@RequestParam(value = "deptId", required = true) String deptId,
+			@RequestParam(value = "patientId", required = true) String patientId,
+			@RequestParam(value = "doctorId", required = true) String doctorId,
+			@RequestParam(value = "doctorScheduleId", required = true) String doctorScheduleId) {
+		ResponseEntity<AppointmentDetail> responseEntity = new ResponseEntity<>();
+		try {
+			AppointmentDetail appointment = appointmentService.appointmentInfo(hospitalId, deptId, patientId, doctorId, doctorScheduleId);
+			responseEntity.setData(appointment);
+			responseEntity.setMsg("查询成功");
+		} catch (ValidException e) {
+			responseEntity.setStatus(Constant.FIAL);
+			responseEntity.setMsg(e.getMessage());
+		}
+		return responseEntity;
+	}
+	
 
 	/**
 	 * appointId查询预约
@@ -106,6 +160,8 @@ public class AppointmentController {
 		}
 		return responseEntity;
 	}
+	
+	
 	
 	/**
 	 * 按DoctorId查询医生所有预约

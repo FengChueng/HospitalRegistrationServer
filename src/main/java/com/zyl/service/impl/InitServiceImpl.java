@@ -26,6 +26,7 @@ import com.zyl.service.InitService;
 import com.zyl.service.PatientService;
 import com.zyl.utils.Constant;
 import com.zyl.utils.DateUtil;
+import com.zyl.utils.EncryptUtil;
 
 @Repository
 public class InitServiceImpl implements InitService {
@@ -51,7 +52,7 @@ public class InitServiceImpl implements InitService {
 	public InitServiceImpl() {
 	}
 
-	@PostConstruct
+//	@PostConstruct
 	@Override
 	public void init() {
 
@@ -100,7 +101,7 @@ public class InitServiceImpl implements InitService {
 					Set<DoctorSchedule> doctorSchedules = new HashSet<>();
 					for (int k = 1; k <= 3; k++) {
 						Calendar calendar = Calendar.getInstance();
-						calendar.set(Calendar.YEAR, 2017 + i);
+						calendar.set(Calendar.YEAR, 2017);
 						calendar.set(Calendar.MONTH, 4 + j);
 						calendar.set(Calendar.DAY_OF_MONTH, 19 + k);
 						calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -132,9 +133,9 @@ public class InitServiceImpl implements InitService {
 			hospital.setHospitalName("绵阳第十中心医院");
 			hospital.setLatitude(30.123f);
 			hospital.setLongitude(10.123f);
-			hospital.setLocation("四川绵阳");
+			hospital.setLocation("四川绵阳高新区磨家镇");
 			hospital.setInfo("济世救人");
-			hospital.setImg("cd120_logo");
+			hospital.setImg(path+"cd120_logo.png");
 			hospital.setLevel(Constant.HOSPITAL_LEVEL_3_A);
 			long createDate = DateUtil.StrToDate("2010-10-20 00:00:00").getTime();
 			hospital.setCreateDate(createDate);
@@ -150,7 +151,7 @@ public class InitServiceImpl implements InitService {
 		String mobilePhone = "18380586504";
 		String password = "123456";
 		try {
-			patientService.register(mobilePhone, password);
+			patientService.register(mobilePhone, EncryptUtil.encryptUserPassword(password));
 		} catch (ValidException e) {
 			LOGGER.error(e.getMessage());
 		}

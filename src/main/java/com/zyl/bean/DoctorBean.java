@@ -25,16 +25,15 @@ public class DoctorBean implements Serializable{
 	private int level;/*{@link com.zyl.utils.Constant;}*/
 	private int orderCount;//被预约次数
 
-//	private List<DoctorSchedule> doctorSchedules;
+	private List<DoctorSchedule> doctorSchedules;
 	
-//	private List<Appointment> appointments;
+	private List<Appointment> appointments;
 
 	public DoctorBean() {
 	}
 
 	public DoctorBean(String doctorAccount, String realName, int age, int sex, long birthDay, String mobilePhone,
-			String portraint, String info, int level, int orderCount) {
-		super();
+			String portraint, String info, int level, int orderCount,List<DoctorSchedule> doctorSchedules,List<Appointment> appointments) {
 		this.doctorAccount = doctorAccount;
 		this.realName = realName;
 		this.age = age;
@@ -45,8 +44,8 @@ public class DoctorBean implements Serializable{
 		this.info = info;
 		this.level = level;
 		this.orderCount = orderCount;
-//		this.doctorSchedules = doctorSchedules;
-//		this.appointments = appointments;
+		this.doctorSchedules = doctorSchedules;
+		this.appointments = appointments;
 	}
 
 	public String getDoctorAccount() {
@@ -129,20 +128,20 @@ public class DoctorBean implements Serializable{
 		this.orderCount = orderCount;
 	}
 
-//	public List<DoctorSchedule> getDoctorSchedules() {
-//		return doctorSchedules;
-//	}
-//
-//	public void setDoctorSchedules(List<DoctorSchedule> doctorSchedules) {
-//		this.doctorSchedules = doctorSchedules;
-//	}
-//
-//	public List<Appointment> getAppointments() {
-//		return appointments;
-//	}
-//
-//	public void setAppointments(List<Appointment> appointments) {
-//		this.appointments = appointments;
-//	}
+	public List<DoctorSchedule> getDoctorSchedules() {
+		return doctorSchedules;
+	}
+
+	public void setDoctorSchedules(List<DoctorSchedule> doctorSchedules) {
+		this.doctorSchedules = doctorSchedules;
+	}
+
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
 	
 }

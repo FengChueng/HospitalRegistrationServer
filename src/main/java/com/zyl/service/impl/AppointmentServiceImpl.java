@@ -59,37 +59,31 @@ public class AppointmentServiceImpl implements AppointmentService{
 //		if(appointment == null){
 //			throw new ValidException("appointment", "该预约不存在");
 //		}
-//		Hospital hospital = hospitalDAO.findOne(appointment.getHospitalId());
-//		if(hospital == null){
-//			throw new ValidException("appointment", "预约不存在");
-//		}
-//		
-//		Department department = departmentDAO.findOne(appointment.getDeptId());
-//		if(department == null){
-//			throw new ValidException("appointment", "预约不存在");
-//		}
-//		
-//		Doctor doctor = doctorDAO.findOne(appointment.getDoctorId());
-//		if(doctor == null){
-//			throw new ValidException("appointment", "预约不存在");
-//		}
-//		
-//		Patient patient = patientDAO.findOne(appointment.getAppointId());
-//		if(patient == null){
-//			throw new ValidException("appointment", "预约不存在");
-//		}
-//		appointmentDetail.setAppointId(appointId);
-//		appointmentDetail.setPrice(appointmentDetail.getPrice());
-//		appointmentDetail.setClinicDate(appointment.getClinicDate());
-//		appointmentDetail.setAppointDate(appointment.getAppointDate());
-//		appointmentDetail.setStatus(appointment.getStatus());
-//		appointmentDetail.setLocation(appointment.getLocation());
-//		appointmentDetail.setHospitalLocation(hospital.getLocation());
-//		appointmentDetail.setHospitalName(hospital.getHospitalName());
-//		appointmentDetail.setDeptName(department.getDeptName());
-//		appointmentDetail.setDoctorName(doctor.getRealName());
-//		appointmentDetail.setPatientName(patient.getRealName());
-//		appointmentDetail.setDoctorAdvice(appointment.getDoctorAdvice());
+		Hospital hospital = hospitalDAO.findOne(hospitalId);
+		if(hospital == null){
+			throw new ValidException("appointment", "预约不存在");
+		}
+		Department department = departmentDAO.findOne(deptId);
+		if(department == null){
+			throw new ValidException("appointment", "预约不存在");
+		}
+		Doctor doctor = doctorDAO.findOne(doctorId);
+		if(doctor == null){
+			throw new ValidException("appointment", "预约不存在");
+		}
+		Patient patient = patientDAO.findOne(patientId);
+		if(patient == null){
+			throw new ValidException("appointment", "预约不存在");
+		}
+		DoctorSchedule doctorSchedule = doctorScheduleDAO.findOne(doctorScheduleId);
+		appointmentDetail.setPrice(doctorSchedule.getPrice());
+		appointmentDetail.setClinicDate(doctorSchedule.getScheduleDate());
+		appointmentDetail.setLocation(doctorSchedule.getLocation());
+		appointmentDetail.setHospitalLocation(hospital.getLocation());
+		appointmentDetail.setHospitalName(hospital.getHospitalName());
+		appointmentDetail.setDeptName(department.getDeptName());
+		appointmentDetail.setDoctorName(doctor.getRealName());
+		appointmentDetail.setPatientName(patient.getRealName());
 		return appointmentDetail;
 	}
 	
@@ -101,11 +95,17 @@ public class AppointmentServiceImpl implements AppointmentService{
 		if(patient == null){
 			throw new ValidException("patient", "用户不存在");
 		}
+		
 		Doctor doctor = doctorDAO.findOne(doctorId);
 		if(doctor == null){
 			throw new ValidException("patient", "医生不存在");
 		}
 		DoctorSchedule doctorSchedule = doctorScheduleDAO.findOne(doctorScheduleId);
+		
+		if(doctorSchedule == null){
+			throw new ValidException("patient", "医生工作日程不存在");
+		}
+		
 		if(doctorSchedule.getStatus()==Constant.DOCTOR_SCHEDULE_POSSIBLE&&
 				doctorSchedule.getMaxAppointmentCount()>0){//可以预约
 			doctorSchedule.setMaxAppointmentCount(doctorSchedule.getMaxAppointmentCount()-1);
@@ -115,6 +115,7 @@ public class AppointmentServiceImpl implements AppointmentService{
 		}
 		
 		Appointment appointment = new Appointment();
+		appointment.setStatus(Constant.APPOINT_UN_HANDLE);
 		appointment.setHospitalId(hospitalId);
 		appointment.setDeptId(deptId);
 		appointment.setDoctorId(doctorId);
@@ -126,13 +127,26 @@ public class AppointmentServiceImpl implements AppointmentService{
 		Set<Appointment> appointments = patient.getAppointments();
 		if(appointments == null){
 			appointments = new HashSet<>();
+		}else{
+			appointments = new HashSet<>(appointments);
+			
+			for (Appointment appointment2 : appointments) {
+				//不可重复预约
+				if(doctorId.equals(appointment2.getDoctorId())&&doctorSchedule.getScheduleDate()==appointment2.getClinicDate()){
+					throw new ValidException("appointment", "不可重复预约");
+				}
+			}
 		}
 		appointments.add(appointment);
-		patient.setAppointments(appointments);
-		doctor.setAppointments(appointments);
-		doctorDAO.saveAndFlush(doctor);
-		patientDAO.saveAndFlush(patient);
-		
+		patient.setAppointments(appointments);	
+		Set<Appointment> doctorAppointments = new HashSet<>();
+		if(doctor.getAppointments()!=null){
+			doctorAppointments.addAll(doctor.getAppointments());
+		}
+		doctorAppointments.add(appointment);
+		doctor.setAppointments(doctorAppointments);
+		doctorDAO.save(doctor);
+		patientDAO.save(patient);		
 	}
 	
 	
@@ -144,6 +158,17 @@ public class AppointmentServiceImpl implements AppointmentService{
 			throw new ValidException("appointment", "该预约不存在");
 		}
 		appointment.setStatus(Constant.APPOINT_HANDLE_ING);//诊断中
+		appointmentDAO.saveAndFlush(appointment);
+	}
+	
+	@Override
+	@Transactional(isolation=Isolation.DEFAULT,propagation=Propagation.REQUIRES_NEW,rollbackFor=Exception.class)
+	public void timeOutAppointment(String appointId) throws ValidException {
+		Appointment appointment = appointmentDAO.findOne(appointId);
+		if(appointment == null){
+			throw new ValidException("appointment", "该预约不存在");
+		}
+		appointment.setStatus(Constant.APPOINT_TIMEOUT);//诊断中
 		appointmentDAO.saveAndFlush(appointment);
 	}
 	
@@ -167,9 +192,28 @@ public class AppointmentServiceImpl implements AppointmentService{
 		if(appointment == null){
 			throw new ValidException("appointment", "该预约不存在");
 		}
+		
+		if(appointment.getStatus() == Constant.APPOINT_COMPLETED){
+			throw new ValidException("appointment", "预约已完成,不能取消");
+		}
+		
+		if(appointment.getStatus() == Constant.APPOINT_CANCEL){
+			throw new ValidException("appointment", "预约已被取消");
+		}
+		
+		if(appointment.getStatus() == Constant.APPOINT_HANDLE_ING){
+			throw new ValidException("appointment", "正在诊断,不能取消");
+		}
+		
+		if(appointment.getStatus() == Constant.APPOINT_TIMEOUT){
+			throw new ValidException("appointment", "预约过期");
+		}
+		
+		
 		if(System.currentTimeMillis()-appointment.getClinicDate()>=24*60*60*1000){
 			throw new ValidException("appointment", "就诊当天不允许退号");
 		}
+		
 		appointment.setStatus(Constant.APPOINT_CANCEL);//取消		
 		appointmentDAO.saveAndFlush(appointment);
 	}
@@ -197,12 +241,12 @@ public class AppointmentServiceImpl implements AppointmentService{
 			throw new ValidException("appointment", "预约不存在");
 		}
 		
-		Patient patient = patientDAO.findOne(appointment.getAppointId());
+		Patient patient = patientDAO.findOne(appointment.getPatientId());
 		if(patient == null){
 			throw new ValidException("appointment", "预约不存在");
 		}
 		appointmentDetail.setAppointId(appointId);
-		appointmentDetail.setPrice(appointmentDetail.getPrice());
+		appointmentDetail.setPrice(appointment.getPrice());
 		appointmentDetail.setClinicDate(appointment.getClinicDate());
 		appointmentDetail.setAppointDate(appointment.getAppointDate());
 		appointmentDetail.setStatus(appointment.getStatus());
